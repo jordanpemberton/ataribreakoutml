@@ -122,7 +122,4 @@ eggs/
 *~
 
 # Custom ignores
-Assets/Scenes/MLExampleScene*
-Assets/Scripts/MLExamples*
-
 
