@@ -1,4 +1,4 @@
-## Atari Breakout Ml
+## Atari Breakout ML
 
 ### To set-up your Python environment:
 
