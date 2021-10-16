@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 10a2baab25b6c672096247262bcc5787
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - EightBit Atari
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 00468705cf8fc8cb182c3d89c65ac6b0, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

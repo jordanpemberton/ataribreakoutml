@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 70fdbfc74a582c7718f0e9b229d95b3d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - EightBit Atari
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 40364117727289212b0c1a9c95d8786b, type: 3}
+  - {fileID: 12800000, guid: 10a2baab25b6c672096247262bcc5787, type: 3}
+  - {fileID: 12800000, guid: 50e8de41c54cb264ea16ced64679cb3a, type: 3}
+  - {fileID: 12800000, guid: 10444323c96bcc23993c0cfd132e800d, type: 3}
+  - {fileID: 12800000, guid: 60b43e7a17a15ffbd82b93520564cbcb, type: 3}
+  - {fileID: 12800000, guid: 708b909ec2a4f511ca2f34cc33c45773, type: 3}
+  - {fileID: 12800000, guid: 70f543c6799bd1d6db2868edd7b77369, type: 3}
+  - {fileID: 12800000, guid: 00468705cf8fc8cb182c3d89c65ac6b0, type: 3}
+  - {fileID: 12800000, guid: 609d944f578ccddcdab538a3c78e9e25, type: 3}
+  - {fileID: 12800000, guid: 20601e60c0d12ecc08921ece23615d1c, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
