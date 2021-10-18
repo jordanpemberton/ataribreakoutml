@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    // It might make more sense for these actions to be handled by a GameManager script,
+    // but I added them here to create the UI.
+    
     public void StartGame()         // Link to Startup.StartGameButton.OnClick
     {
         Debug.Log("Start Game");
@@ -15,6 +18,12 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("New Game");
         SceneManager.LoadScene("Startup");
+    }
+
+    public void GameOver()          //
+    {
+        Debug.Log("Game Over");
+        SceneManager.LoadScene("GameOver");
     }
 
     public void QuitGame()           // Link to GameOver.QuitGameButton.OnClick
