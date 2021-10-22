@@ -5,11 +5,11 @@ using UnityEngine;
 public class PaddleController : MonoBehaviour
 {
     // public vars
-    private Camera mainCamera;
     public bool humanPlayer = true;
     public float speed = 5.0f;
 
     // private vars
+    private Camera mainCamera;
     private float horizontalInput;
     private Vector3 screenBounds;
     private float xBound;

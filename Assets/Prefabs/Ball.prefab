@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultySpeed: 1
   newGame: 0
+  newBall: {fileID: 173092112759910203}
 --- !u!50 &173092112759910204
 Rigidbody2D:
   serializedVersion: 4
