@@ -22,7 +22,6 @@ public class PaddleController : MonoBehaviour
         mainCamera = Camera.main;
         screenBounds = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
         xBound = screenBounds.x;
-
         paddleScale = transform.localScale;
         paddleLength = paddleScale.x / 2.0f;
     }
@@ -47,7 +46,6 @@ public class PaddleController : MonoBehaviour
             // horizontal movement
             horizontalInput = Input.GetAxis("Horizontal");
             transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
-            Debug.Log($"\"{paddleLength}\" and \"{transform.position.x}\"", this);
         }
     }
 }
