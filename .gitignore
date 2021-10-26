@@ -123,6 +123,8 @@ eggs/
 
 # Custom ignores
 Assets/Fonts/*
-Assets/Fonts/EightBit-Atari-Fonts-2/Truetype/EightBit*Atari-Nc32.ttf*
-Assets/Fonts/RetroStereo/Retro*Mono*Wide.tff*
+!Assets/Fonts/EightBit-Atari-Fonts-2/Truetype/EightBit\ Atari-Nc32.ttf
+!Assets/Fonts/EightBit-Atari-Fonts-2/Truetype/EightBit\ Atari-Nc32.ttf.meta
+!Assets/Fonts/RetroStereo/Retro Mono Wide.ttf
+!Assets/Fonts/RetroStereo/Retro Mono Wide.ttf.meta
 
