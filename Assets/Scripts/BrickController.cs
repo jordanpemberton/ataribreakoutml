@@ -6,9 +6,7 @@ public class BrickController : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Destroy(gameObject);
-        transform.GetComponent<SpriteRenderer>().enabled = false;  // hide brick
-        // FindObjectOfType<Bricks>().RemoveBrick(this);
+        Destroy(gameObject);
         transform.parent.GetComponent<BricksController>().RemoveBrick(this);
     }
 }

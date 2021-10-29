@@ -6,27 +6,28 @@ public class BallController : MonoBehaviour
 {
     public float ballSpeed = 5.0f;
 
-    // public GameObject newBall;
-
     // private vars
     private Rigidbody2D ballBody;
     private Vector3 ballInitialPosition;
-    private Vector2 ballInitialVector;
+    private Vector2 ballInitialForce;
 
-    void StartBall()
+    void ResetBall()
     {
         // set to initial position
         transform.position = ballInitialPosition;
         // add a force
-        ballBody.AddForce(ballInitialVector);
+        ballBody.velocity = Vector2.zero;
+        ballBody.angularVelocity = 0f;
+        ballBody.AddForce(ballInitialForce);
     }
 
     void Awake()
     {
         ballBody = GetComponent<Rigidbody2D>();
         ballInitialPosition = new Vector3(-7f, 1f, 0f);
-        ballInitialVector   = new Vector2(100.0f * ballSpeed, -100.0f * ballSpeed);
-        StartBall();
+        ballInitialForce    = new Vector2(110.0f * ballSpeed, -90.0f * ballSpeed);
+
+        ResetBall();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -34,10 +35,10 @@ public class BallController : MonoBehaviour
         if (collision.collider.gameObject.name == "Floor")
         {
             // (game over)
-            Debug.Log("GAME OVER");
+            GameManager.instance.GameOver();
 
-            // for now
-            StartBall();
+            // give some num tries first?
+            // ResetBall();
         }
     }
 

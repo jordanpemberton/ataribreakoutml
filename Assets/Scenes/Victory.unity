@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 106065484}
   - component: {fileID: 106065483}
   m_Layer: 5
-  m_Name: GameOverBGImage
+  m_Name: VictoryBGImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 355421775}
   - component: {fileID: 355421774}
   m_Layer: 5
-  m_Name: GameOverText
+  m_Name: VictoryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GAMEOVER
+  m_Text: YOU WIN
 --- !u!222 &355421775
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 1399230434}
   - component: {fileID: 1399230433}
   m_Layer: 5
-  m_Name: GameOverCanvas
+  m_Name: VictoryCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

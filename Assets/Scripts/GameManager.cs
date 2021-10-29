@@ -22,33 +22,33 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void StartGame()         // Link to Startup.StartGameButton.OnClick
+    public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
-        Debug.Log("Start Game");
-        SceneManager.LoadScene("Game");
+        Debug.Log("Start New Game");
+        SceneManager.LoadScene("Breakout");
     }
 
-    public void NewGame()           // Link to GameOver.NewGameButton.OnClick
-    {
-        Debug.Log("New Game");
-        SceneManager.LoadScene("Startup");
-    }
-
-    public void GameOver()          //
+    public void GameOver()
     {
         Debug.Log("Game Over");
         SceneManager.LoadScene("GameOver");
     }
 
+    public void GameWin()
+    {
+        Debug.Log("You Win!");
+        SceneManager.LoadScene("Victory");
+    }
+
     public void ExitGame()           // Link to Game.ExitGameButton.OnClick
     {
-        Debug.Log("Quit Game");
+        Debug.Log("Exit Game");
         SceneManager.LoadScene("Startup");
     }
 
     public void QuitGame()           // Link to GameOver.QuitGameButton.OnClick
     {
-        Debug.Log("Quit Game");
+        Debug.Log("Exit Game");
         // exit game ?
     }
 }

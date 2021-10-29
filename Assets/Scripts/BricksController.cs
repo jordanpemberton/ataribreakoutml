@@ -5,10 +5,14 @@ public class BricksController : MonoBehaviour
 {
     public GameObject BrickObject;
 
-    public List<GameObject> activeBricks;   // active bricks
+    private List<GameObject> activeBricks = new List<GameObject>();   // active bricks
 
+    private float x0 = -12f;
+    private float y0 =  7f;
+    private float brick_h = 0.5f;
+    private float brick_w = 2f;
 
-    public Color[] brickColors = new Color[] {
+    private Color[] brickColors = new Color[] {
         Color.grey,
         Color.white,
         Color.magenta,
@@ -24,28 +28,12 @@ public class BricksController : MonoBehaviour
         if (activeBricks.Count == 0)
         {
             //Display Jordan's victory screen;
-            Debug.Log("YOU WIN!");
+            GameManager.instance.GameWin();
         }
     }
 
-    void Start()
+    void CreateBricks()
     {
-        // link prefab if not already linked
-        if (BrickObject == null)
-        {
-            BrickObject   = Resources.Load("Prefabs/Brick", typeof(GameObject)) as GameObject;
-            if (BrickObject == null)
-            {
-                Debug.Log("Prefab 'Brick' not found.");
-                return;
-            }
-        }
-
-        float x0 = -12f;
-        float y0 =  7f;
-        float brick_h = 0.5f;
-        float brick_w = 2f;
-
         // instantiate child brick g.o.s
         for (int i=0; i<13; i++)
         {
@@ -68,6 +56,22 @@ public class BricksController : MonoBehaviour
                 activeBricks.Add(brick);
             }
         }
+    }
+
+    void Start()
+    {
+        // link prefab if not already linked
+        if (BrickObject == null)
+        {
+            BrickObject   = Resources.Load("Prefabs/Brick", typeof(GameObject)) as GameObject;
+            if (BrickObject == null)
+            {
+                Debug.Log("Prefab 'Brick' not found.");
+                return;
+            }
+        }
+
+        CreateBricks();
     }
 
     void Update()
