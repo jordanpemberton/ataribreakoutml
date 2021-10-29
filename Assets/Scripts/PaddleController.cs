@@ -42,6 +42,7 @@ public class PaddleController : MonoBehaviour
             {
                 transform.position = new Vector3(xBound - paddleLength, transform.position.y, transform.position.z);
             }
+
             
             // horizontal movement
             horizontalInput = Input.GetAxis("Horizontal");
