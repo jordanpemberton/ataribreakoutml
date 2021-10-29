@@ -4,54 +4,47 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    // public vars
-    public float difficultySpeed = 25.0f;
-    public bool newBallSpawn;
-    
-    public GameObject newBall;
+    GlobalData d;
+
+    public float ballSpeed = 5.0f;
+
+    // public GameObject newBall;
 
     // private vars
-    private Camera mainCamera;
     private Rigidbody2D ballBody;
     private Vector2 ballInitialVector;
     private Vector3 ballInitialPosition;
     private Vector3 ballPosition;
-    private Vector3 screenBounds;
-    private float yBound;
 
-    // Start is called before the first frame update
-    void Awake()
+    void StartBall()
     {
-        ballBody = GetComponent<Rigidbody2D>();
-        ballInitialVector = new Vector2(100.0f * difficultySpeed, -100.0f * difficultySpeed);
-        ballInitialPosition = new Vector3(-8.0f, 4.0f, 0.0f);
-        mainCamera = Camera.main;
-        screenBounds = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
-        yBound = screenBounds.y;
+        // set to initial position
+        transform.position = ballInitialPosition;
+        // add a force
+        ballBody.AddForce(ballInitialVector);
     }
 
-    // Update is called once per frame
+    void Awake()
+    {
+        Debug.Log(GameManager.instance.screenBounds.y);
+        d = GlobalData.GetInstance();
+
+        ballBody = GetComponent<Rigidbody2D>();
+        ballInitialVector = new Vector2(100.0f * ballSpeed, -100.0f * ballSpeed);
+        ballInitialPosition = new Vector3(-8f, -2f, 0.0f);
+        StartBall();
+    }
+
     void LateUpdate()
     {
-        // add force vector to rigidbody if just starting
-        if (!newBallSpawn)
-        {
-            // add a force
-            ballBody.AddForce(ballInitialVector);
-
-            // set ball inactive
-            newBallSpawn = !newBallSpawn;
-        }
-
         // check if game over
-        ballPosition = transform.position;
-        if (ballPosition.y < -yBound - 1.0f)
+        if (transform.position.y < (GameManager.instance.screenBounds.y - 1f))
         {
-            // spawn new ball
-            newBallSpawn = !newBallSpawn;
-            GameObject nextBall = Instantiate(newBall, ballInitialPosition, transform.rotation);
-            nextBall.name = nextBall.name.Replace("(Clone)", "");
-            Destroy(gameObject);
+            // if out of tries, display game over screen:
+            ;
+
+            // else count down tries, reset game
+            // StartBall();
         }
     }
 }

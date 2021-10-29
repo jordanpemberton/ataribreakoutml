@@ -3,10 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UIManager : MonoBehaviour
+
+public class GameManager : MonoBehaviour
 {
-    // It might make more sense for these actions to be handled by a GameManager script,
-    // but I added them here to create the UI.
+    // private singleton instance
+    public static GameManager instance = null; // should be able to access from anywhere ?
+
+
+    public Camera  mainCamera;
+    public Vector3 screenBounds;
+
+    public bool  humanPlayer = true;
+
+    // public bool active_game = false;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        mainCamera   = Camera.main;
+        screenBounds = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
+    }
 
     public void StartGame()         // Link to Startup.StartGameButton.OnClick
     {
