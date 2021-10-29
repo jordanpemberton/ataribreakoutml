@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    GlobalData d;
-
     public float ballSpeed = 5.0f;
 
     // public GameObject newBall;
 
     // private vars
     private Rigidbody2D ballBody;
-    private Vector2 ballInitialVector;
     private Vector3 ballInitialPosition;
-    private Vector3 ballPosition;
+    private Vector2 ballInitialVector;
 
     void StartBall()
     {
@@ -26,25 +23,25 @@ public class BallController : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log(GameManager.instance.screenBounds.y);
-        d = GlobalData.GetInstance();
-
         ballBody = GetComponent<Rigidbody2D>();
-        ballInitialVector = new Vector2(100.0f * ballSpeed, -100.0f * ballSpeed);
-        ballInitialPosition = new Vector3(-8f, -2f, 0.0f);
+        ballInitialPosition = new Vector3(-7f, 1f, 0f);
+        ballInitialVector   = new Vector2(100.0f * ballSpeed, -100.0f * ballSpeed);
         StartBall();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.gameObject.name == "Floor")
+        {
+            // (game over)
+            Debug.Log("GAME OVER");
+
+            // for now
+            StartBall();
+        }
     }
 
     void LateUpdate()
     {
-        // check if game over
-        if (transform.position.y < (GameManager.instance.screenBounds.y - 1f))
-        {
-            // if out of tries, display game over screen:
-            ;
-
-            // else count down tries, reset game
-            // StartBall();
-        }
     }
 }

@@ -9,10 +9,6 @@ public class GameManager : MonoBehaviour
     // private singleton instance
     public static GameManager instance = null; // should be able to access from anywhere ?
 
-
-    public Camera  mainCamera;
-    public Vector3 screenBounds;
-
     public bool  humanPlayer = true;
 
     // public bool active_game = false;
@@ -24,12 +20,6 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-    }
-
-    void Start()
-    {
-        mainCamera   = Camera.main;
-        screenBounds = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
     }
 
     public void StartGame()         // Link to Startup.StartGameButton.OnClick

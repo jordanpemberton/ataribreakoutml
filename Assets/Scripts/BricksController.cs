@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class BricksController : MonoBehaviour
 {
-    GlobalData d;
-
     public GameObject BrickObject;
 
     public List<GameObject> activeBricks;   // active bricks
@@ -32,8 +30,6 @@ public class BricksController : MonoBehaviour
 
     void Start()
     {
-        d = GlobalData.GetInstance();
-
         // link prefab if not already linked
         if (BrickObject == null)
         {
@@ -45,21 +41,28 @@ public class BricksController : MonoBehaviour
             }
         }
 
+        float x0 = -12f;
+        float y0 =  7f;
+        float brick_h = 0.5f;
+        float brick_w = 2f;
+
         // instantiate child brick g.o.s
-        for (int i=0; i<(int)d.NUM_BRICKS_X; i++)
+        for (int i=0; i<13; i++)
         {
-            for (int j=0; j<(int)d.NUM_BRICKS_Y; j++)
+            for (int j=0; j<7; j++)
             {
                 GameObject brick = Instantiate(BrickObject);
 
-                float x = d.BRICK_X0 + i * d.BRICK_W;
-                float y = d.BRICK_Y0 - j * d.BRICK_H;
+                float x = x0 + i * brick_w;
+                float y = y0 - j * brick_h;
 
                 brick.transform.position = new Vector2(x, y);
+                brick.transform.localScale = new Vector2(brick_w-0.1f, brick_h-0.1f);
 
                 SpriteRenderer rend = brick.GetComponent<SpriteRenderer>();
                 rend.material.color = brickColors[j];
                 rend.enabled = true; // show
+
                 brick.transform.parent  = transform;  // set Bricks as parent to this brick
 
                 activeBricks.Add(brick);

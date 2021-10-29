@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PaddleController : MonoBehaviour
 {
-    GlobalData d;
-
     public float paddleSpeed = 10.0f;
 
     private float horizontalInput;
@@ -15,10 +13,8 @@ public class PaddleController : MonoBehaviour
 
     void Awake()
     {
-        d = GlobalData.GetInstance();
-
         // set paddle x-bounds from layout data
-        paddle_x_bound = d.SCENE_W / 2f - d.PADDING - d.WALL_W - paddle_scale.x / 2f;
+        paddle_x_bound = 10.25f; // 14.5 - 1.5 - 2.75
     }
 
     void LateUpdate()
