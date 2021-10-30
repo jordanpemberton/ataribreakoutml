@@ -25,7 +25,8 @@ public class BallController : MonoBehaviour
     {
         ballBody = GetComponent<Rigidbody2D>();
         ballInitialPosition = new Vector3(-7f, 1f, 0f);
-        ballInitialForce    = new Vector2(110.0f * ballSpeed, -90.0f * ballSpeed);
+        // ballInitialForce    = new Vector2(100.0f * ballSpeed, -100.0f * ballSpeed);
+        ballInitialForce    = new Vector2(200f * ballSpeed, 0f);
 
         ResetBall();
     }

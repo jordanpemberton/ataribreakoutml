@@ -888,6 +888,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
+    - target: {fileID: 173092112759910204, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 15a7555910c4a024bb8da1693468c502, type: 2}
+    - target: {fileID: 173092112759910204, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 173092112759910204, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
+      propertyPath: m_GravityScale
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 173092112759910205, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1395,6 +1407,14 @@ PrefabInstance:
     - target: {fileID: 454324306907125620, guid: 57257effd840e1444a7b25adb0643612, type: 3}
       propertyPath: m_Name
       value: LeftWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 4129326881901124543, guid: 57257effd840e1444a7b25adb0643612, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4129326881901124543, guid: 57257effd840e1444a7b25adb0643612, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57257effd840e1444a7b25adb0643612, type: 3}
