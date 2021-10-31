@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     // private singleton instance, access from anywhere
-    public static GameManager instance = null; 
+    public static GameManager instance = null;
 
     public bool  humanPlayer = true;
 
@@ -24,8 +24,28 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
+    // void Start()
+    // {
+    //     // link prefab if not already linked
+    //     if (ScoreTextObject == null)
+    //     {
+    //         ScoreTextObject = GameObject.Find("ScoreText");
+    //         if (ScoreTextObject == null)
+    //         {
+    //             Debug.Log("GameObject 'ScoreText' not found.");
+    //             return;
+    //         }
+    //     }
+
+    //     score = 0;
+    // }
+
+    public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
+        Debug.Log("Start New Game");
+
+        SceneManager.LoadScene("Breakout");
+
         // link prefab if not already linked
         if (ScoreTextObject == null)
         {
@@ -36,21 +56,23 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
-    }
 
-    public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
-    {
-        Debug.Log("Start New Game");
-        SceneManager.LoadScene("Breakout");
+        score = 0;
     }
 
     public void AddScore(int points)
     {
         if (ScoreTextObject == null)
         {
-            Debug.Log("GameObject 'ScoreText' not found.");
-            return;
+            ScoreTextObject = GameObject.Find("ScoreText");
+            if (ScoreTextObject == null)
+            {
+                Debug.Log("GameObject 'ScoreText' not found.");
+                return;
+            }
+            score = 0;
         }
+
         Debug.Log($"+{points} point(s)");
         score += points;
         ScoreTextObject.GetComponent<Text>().text = score.ToString("D3");
@@ -77,6 +99,7 @@ public class GameManager : MonoBehaviour
     public void QuitGame()           // Link to GameOver.QuitGameButton.OnClick
     {
         Debug.Log("Exit Game");
-        // exit game ?
+        // exit unity game ?
+        SceneManager.LoadScene("Startup"); // go back to startup for now
     }
 }
