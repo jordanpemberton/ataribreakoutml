@@ -513,6 +513,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 204776122}
+    - target: {fileID: 8404339144200647268, guid: 9756eefa2e5a1c84b9d1174c4997b241, type: 3}
+      propertyPath: ScoreTextObject
+      value: 
+      objectReference: {fileID: 1124532244}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9756eefa2e5a1c84b9d1174c4997b241, type: 3}
 --- !u!1 &596807372
@@ -891,14 +895,14 @@ PrefabInstance:
     - target: {fileID: 173092112759910204, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 6200000, guid: 15a7555910c4a024bb8da1693468c502, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 173092112759910204, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
       propertyPath: m_AngularDrag
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 173092112759910204, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
       propertyPath: m_GravityScale
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 173092112759910205, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
       propertyPath: m_RootOrder

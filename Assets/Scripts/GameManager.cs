@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
@@ -11,7 +12,8 @@ public class GameManager : MonoBehaviour
 
     public bool  humanPlayer = true;
 
-    // public bool active_game = false;
+    public GameObject ScoreTextObject;
+    public int score = 0;
 
     void Awake()
     {
@@ -22,10 +24,36 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start()
+    {
+        // link prefab if not already linked
+        if (ScoreTextObject == null)
+        {
+            ScoreTextObject = GameObject.Find("ScoreText");
+            if (ScoreTextObject == null)
+            {
+                Debug.Log("GameObject 'ScoreText' not found.");
+                return;
+            }
+        }
+    }
+
     public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
         Debug.Log("Start New Game");
         SceneManager.LoadScene("Breakout");
+    }
+
+    public void AddScore(int points)
+    {
+        if (ScoreTextObject == null)
+        {
+            Debug.Log("GameObject 'ScoreText' not found.");
+            return;
+        }
+        Debug.Log($"+{points} point(s)");
+        score += points;
+        ScoreTextObject.GetComponent<Text>().text = score.ToString("D3");
     }
 
     public void GameOver()

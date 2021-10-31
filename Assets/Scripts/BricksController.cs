@@ -25,6 +25,10 @@ public class BricksController : MonoBehaviour
     public void RemoveBrick(BrickController brick)
     {
         activeBricks.Remove(brick.gameObject);
+
+        // +score
+        GameManager.instance.AddScore(1);
+
         if (activeBricks.Count == 0)
         {
             //Display Jordan's victory screen;
