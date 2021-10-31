@@ -13,8 +13,8 @@ public class PaddleController : MonoBehaviour
 
     void Awake()
     {
-        // set paddle x-bounds from layout data
-        paddle_x_bound = 10.25f; // 14.5 - 1.5 - 2.75
+        // set paddle x-bounds to match left/right walls inner faces
+        paddle_x_bound = 10.25f; 
     }
 
     void LateUpdate()
@@ -24,7 +24,6 @@ public class PaddleController : MonoBehaviour
         {
             // horizontal input
             horizontalInput = Input.GetAxis("Horizontal");
-            // new_x += Time.deltaTime * paddleSpeed * horizontalInput;
             transform.Translate(Vector3.right * Time.deltaTime * paddleSpeed * horizontalInput);
         }
         // if AI player

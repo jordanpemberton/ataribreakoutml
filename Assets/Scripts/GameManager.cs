@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    // private singleton instance
-    public static GameManager instance = null; // should be able to access from anywhere ?
+    // private singleton instance, access from anywhere
+    public static GameManager instance = null; 
 
     public bool  humanPlayer = true;
 

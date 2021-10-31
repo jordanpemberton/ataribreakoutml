@@ -5,7 +5,7 @@ public class BricksController : MonoBehaviour
 {
     public GameObject BrickObject;
 
-    private List<GameObject> activeBricks = new List<GameObject>();   // active bricks
+    private List<GameObject> activeBricks = new List<GameObject>();  
 
     private float x0 = -12f;
     private float y0 =  7f;
@@ -31,14 +31,13 @@ public class BricksController : MonoBehaviour
 
         if (activeBricks.Count == 0)
         {
-            //Display Jordan's victory screen;
             GameManager.instance.GameWin();
         }
     }
 
     void CreateBricks()
     {
-        // instantiate child brick g.o.s
+        // instantiate child brick game objects
         for (int i=0; i<13; i++)
         {
             for (int j=0; j<7; j++)
@@ -53,7 +52,6 @@ public class BricksController : MonoBehaviour
 
                 SpriteRenderer rend = brick.GetComponent<SpriteRenderer>();
                 rend.material.color = brickColors[j];
-                rend.enabled = true; // show
 
                 brick.transform.parent  = transform;  // set Bricks as parent to this brick
 
