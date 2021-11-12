@@ -4,48 +4,42 @@ using UnityEngine;
 
 public class PaddleController : MonoBehaviour
 {
-    // public vars
-    public bool humanPlayer = true;
-    public float speed = 5.0f;
+    public float paddleSpeed = 10.0f;
 
-    // private vars
-    private Camera mainCamera;
     private float horizontalInput;
-    private Vector3 screenBounds;
-    private float xBound;
-    private Vector3 paddleScale;
-    private float paddleLength;
-    
-    // Start is called before the first frame update
-    void Start()
+    private float paddle_x_bound;
+    private Vector3 paddle_scale;
+
+
+    void Awake()
     {
-        mainCamera = Camera.main;
-        screenBounds = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
-        xBound = screenBounds.x;
-        paddleScale = transform.localScale;
-        paddleLength = paddleScale.x / 2.0f;
+        // set paddle x-bounds to match left/right walls inner faces
+        paddle_x_bound = 10.25f; 
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
-
-        // move object if human player
-        if (humanPlayer)
+        // use input if human player
+        if (GameManager.instance.humanPlayer)
         {
-            // border checks
-            if (transform.position.x < -xBound + paddleLength)
-            {
-                transform.position = new Vector3(-xBound + paddleLength, transform.position.y, transform.position.z);
-            }
-            if (transform.position.x > xBound - paddleLength)
-            {
-                transform.position = new Vector3(xBound - paddleLength, transform.position.y, transform.position.z);
-            }
-            
-            // horizontal movement
+            // horizontal input
             horizontalInput = Input.GetAxis("Horizontal");
-            transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
+            transform.Translate(Vector3.right * Time.deltaTime * paddleSpeed * horizontalInput);
+        }
+        // if AI player
+        else
+        {
+            ;
+        }
+
+        // stay within bounds checks
+        if (transform.position.x < -paddle_x_bound)
+        {
+            transform.position = new Vector3(-paddle_x_bound, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x > paddle_x_bound)
+        {
+            transform.position = new Vector3(paddle_x_bound, transform.position.y, transform.position.z);
         }
     }
 }

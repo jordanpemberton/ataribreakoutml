@@ -4,54 +4,44 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    // public vars
-    public float difficultySpeed = 25.0f;
-    public bool newBallSpawn;
-    
-    public GameObject newBall;
+    public float ballSpeed = 10.0f;
 
-    // private vars
-    private Camera mainCamera;
     private Rigidbody2D ballBody;
-    private Vector2 ballInitialVector;
     private Vector3 ballInitialPosition;
-    private Vector3 ballPosition;
-    private Vector3 screenBounds;
-    private float yBound;
+    private Vector2 ballInitialForce;
 
-    // Start is called before the first frame update
+    void ResetBall()
+    {
+        // set to initial position
+        transform.position = ballInitialPosition;
+        // add a force
+        ballBody.velocity = Vector2.zero;
+        ballBody.angularVelocity = 0f;
+        ballBody.AddForce(ballInitialForce);
+    }
+
     void Awake()
     {
         ballBody = GetComponent<Rigidbody2D>();
-        ballInitialVector = new Vector2(100.0f * difficultySpeed, -100.0f * difficultySpeed);
-        ballInitialPosition = new Vector3(-8.0f, 4.0f, 0.0f);
-        mainCamera = Camera.main;
-        screenBounds = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
-        yBound = screenBounds.y;
+        ballInitialPosition = new Vector3(-7f, 1f, 0f);
+        ballInitialForce    = new Vector2(100f * ballSpeed, -100f * ballSpeed);
+
+        ResetBall();
     }
 
-    // Update is called once per frame
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.gameObject.name == "Floor")
+        {
+            // (game over)
+            GameManager.instance.GameOver();
+
+            // give some num tries first?
+            // ResetBall();
+        }
+    }
+
     void LateUpdate()
     {
-        // add force vector to rigidbody if just starting
-        if (!newBallSpawn)
-        {
-            // add a force
-            ballBody.AddForce(ballInitialVector);
-
-            // set ball inactive
-            newBallSpawn = !newBallSpawn;
-        }
-
-        // check if game over
-        ballPosition = transform.position;
-        if (ballPosition.y < -yBound - 1.0f)
-        {
-            // spawn new ball
-            newBallSpawn = !newBallSpawn;
-            GameObject nextBall = Instantiate(newBall, ballInitialPosition, transform.rotation);
-            nextBall.name = nextBall.name.Replace("(Clone)", "");
-            Destroy(gameObject);
-        }
     }
 }
