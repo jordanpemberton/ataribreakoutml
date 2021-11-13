@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public bool humanPlayer = true;
+    public GameObject paddleAI;
+    private PaddleAgent _agent;
     public GameObject scoreTextObject;
     public int score = 0;
 
@@ -26,10 +28,21 @@ public class GameManager : MonoBehaviour
     // this currently only gets called when a new game is started from the startup screen... how to always call?
     public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
-        if (humanPlayer) Debug.Log("Start New Game");
-
         SceneManager.LoadScene("Breakout");
-
+        
+        if (humanPlayer)
+        {
+            Debug.Log("Start New Game");
+        }
+        else
+        {
+            if (paddleAI == null)
+            {
+                paddleAI = GameObject.Find("PaddleAI");
+                if (paddleAI != null) _agent = paddleAI.GetComponent<PaddleAgent>();
+            }
+        }
+        
         // link prefab if not already linked
         if (scoreTextObject == null)
         {
@@ -44,44 +57,56 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int points)
     {
+        // Update score
         score += points;
 
+        // Update score text
         if (scoreTextObject == null)
         {
             scoreTextObject = GameObject.Find("ScoreText");
             if (scoreTextObject == null)
             {
                 if (humanPlayer) Debug.Log("GameObject 'ScoreText' not found.");
+                return;
             }
-            // score = 0; // ?
-            return;
         }
-
         scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
+
+        // If AI, reward 
+        if (!humanPlayer && _agent != null)
+        {
+            _agent.SetReward(_agent.brickHitReward);
+        }
     }
 
     public void GameOver()
     {
+        // If human player, show GameOver screen
         if (humanPlayer)
         {
             Debug.Log("Game Over");
             SceneManager.LoadScene("GameOver");
         }
+        // If AI, penalize and start new game
         else
         {
+            if (_agent != null) _agent.SetReward(_agent.gameOverPenalty);
             StartGame();
         }
     }
 
     public void GameWin() 
     {
+        // If human player show Victory screen
         if (humanPlayer)
         {
             Debug.Log("You Win!");
             SceneManager.LoadScene("Victory");
         }
+        // If AI, reward and start new game 
         else
         {
+            if (_agent != null) _agent.SetReward(_agent.victoryReward);
             StartGame();
         }
     }

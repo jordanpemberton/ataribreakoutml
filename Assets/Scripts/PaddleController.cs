@@ -31,7 +31,7 @@ public class PaddleController : MonoBehaviour
         }
     }
     
-    void LateUpdate()
+    private void LateUpdate()
     {
         // use input if human player
         if (GameManager.Instance.humanPlayer)

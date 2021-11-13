@@ -18,19 +18,16 @@ public class PaddleAgent : Agent
     public float ballHitReward = 5.0f;  
     public float brickHitReward = 5.0f;  
     public float gameOverPenalty = -20.0f;
-    public float victoryReward = 20.0f; // maybe unnecessary?
+    public float victoryReward = 20.0f; 
     
     private const float PaddleXBound = 10.25f;
-
-    private int _score = 0;
-    private bool _gameOver = false;
-    private bool _victory = false;
 
     private void Awake()
     {
         GameManager.Instance.humanPlayer = false;
         GameManager.Instance.score = 0;
     }
+
     private void Move(float horizontalInput)
     {
         transform.Translate(Vector3.right * Time.deltaTime * paddleSpeed * horizontalInput);
@@ -46,7 +43,7 @@ public class PaddleAgent : Agent
         }
     }
     
-    // For human player use (developing)
+    // For human player use (when developing)
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
@@ -59,34 +56,18 @@ public class PaddleAgent : Agent
         sensor.AddObservation(transform.localPosition);
         
         // ball position
-        if (ballTransform != null)
-        {
-            sensor.AddObservation(ballTransform.localPosition);
-        }
-        else
-        {
-            sensor.AddObservation(Vector3.zero);
-        }
+        sensor.AddObservation(ballTransform != null ? ballTransform.localPosition : Vector3.zero);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
         float moveX = actions.ContinuousActions[0]; // only need X-axis movement /input
         Move(moveX);
-        
-        // Rewards/penalties
-        // Check if game over or won
-        if (_gameOver) SetReward(gameOverPenalty);
-        if (_victory) SetReward(victoryReward);
-
-        // check/update score
-        if (GameManager.Instance.score == _score) return;
-        if (GameManager.Instance.score > _score)
-            SetReward(brickHitReward);
-        _score = GameManager.Instance.score;
     }
     
-    // Rewards
+    // GameOver, Victory, and Score rewards are all set in GameManager on corresponding events
+    
+    // Ball Hit reward is set here on collision event:
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<BallController>(out BallController ball))

@@ -976,7 +976,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7914907604704505153, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
       propertyPath: m_Name
-      value: PaddleAgent
+      value: PaddleAI
       objectReference: {fileID: 0}
     - target: {fileID: 7914907604704505153, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
       propertyPath: m_IsActive
