@@ -14,17 +14,8 @@ public class BallController : MonoBehaviour
     {
         // Reset to initial position
         transform.position = ballInitialPosition;
-
         // Add force
         ballBody.AddForce(ballInitialForce * ballSpeed);
-        // AddSlightlyRandomForce();
-    }
-
-    private void AddSlightlyRandomForce()
-    {
-        int rand = Random.Range(0, 100); // extra big for testing, but only gets applied first time?
-        Vector2 force = new Vector2( 100.0f - rand, -100.0f - rand );
-        ballBody.AddForce(force * ballSpeed);
     }
 
     void Awake()
@@ -46,11 +37,5 @@ public class BallController : MonoBehaviour
 
             // give some num tries first?
         }
-        
-        // attempting to add some randomness to direction, not working tho
-        // else if (collider == "Wall" || collider == "Brick")
-        // {
-        //     AddSlightlyRandomForce();
-        // }
     }
 }
