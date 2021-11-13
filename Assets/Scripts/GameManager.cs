@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // this currently only gets called when a new game is started from the startup screen... how to always call?
     public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
         SceneManager.LoadScene("Breakout");
