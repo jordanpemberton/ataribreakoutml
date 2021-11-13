@@ -218,7 +218,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7914907604704505153, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
       propertyPath: m_Name
-      value: Paddle
+      value: PaddleHuman
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505153, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
       propertyPath: m_RootOrder
@@ -375,6 +379,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &371948601 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 173092112759910205, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
+  m_PrefabInstance: {fileID: 974237957}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &489149189
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,6 +522,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 204776122}
+    - target: {fileID: 8404339144200647268, guid: 9756eefa2e5a1c84b9d1174c4997b241, type: 3}
+      propertyPath: humanPlayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8404339144200647268, guid: 9756eefa2e5a1c84b9d1174c4997b241, type: 3}
       propertyPath: ScoreTextObject
       value: 
@@ -898,7 +911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 173092112759910204, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
       propertyPath: m_AngularDrag
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 173092112759910204, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
       propertyPath: m_GravityScale
@@ -954,6 +967,139 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d62ac7bf7e268a4488f56c6cc2cabdf, type: 3}
+--- !u!1001 &976336931
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7914907604704505153, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_Name
+      value: PaddleAgent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505153, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914907604704505156, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7914907604704505154, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+--- !u!1 &976336932 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7914907604704505153, guid: e6661e89c335d7f9d927bbbf36c8c5df, type: 3}
+  m_PrefabInstance: {fileID: 976336931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &976336933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976336932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 6
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 1
+      BranchSizes: 
+    VectorActionSize: 01000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: PlayGame
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_ObservableAttributeHandling: 0
+--- !u!114 &976336934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976336932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1485e36b24a35212dbb4ea43e8f5139e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 100
+  ballTransform: {fileID: 371948601}
+  paddleSpeed: 10
+  ballHitReward: 1
+  brickHitReward: 50
+  gameOverPenalty: -100
+  victoryReward: 200
+--- !u!114 &976336935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976336932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &997702981
 GameObject:
   m_ObjectHideFlags: 0

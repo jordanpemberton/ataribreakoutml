@@ -27,11 +27,11 @@ public class BricksController : MonoBehaviour
         activeBricks.Remove(brick.gameObject);
 
         // +score
-        GameManager.instance.AddScore(1);
+        GameManager.Instance.AddScore(1);
 
         if (activeBricks.Count == 0)
         {
-            GameManager.instance.GameWin();
+            GameManager.Instance.GameWin();
         }
     }
 
@@ -68,16 +68,11 @@ public class BricksController : MonoBehaviour
             BrickObject   = Resources.Load("Prefabs/Brick", typeof(GameObject)) as GameObject;
             if (BrickObject == null)
             {
-                Debug.Log("Prefab 'Brick' not found.");
+                if (GameManager.Instance.humanPlayer) Debug.Log("Prefab 'Brick' not found.");
                 return;
             }
         }
 
         CreateBricks();
-    }
-
-    void Update()
-    {
-
     }
 }

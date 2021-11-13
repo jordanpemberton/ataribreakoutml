@@ -4,44 +4,53 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    public float ballSpeed = 10.0f;
+    public float ballSpeed = 15.0f;
 
     private Rigidbody2D ballBody;
     private Vector3 ballInitialPosition;
     private Vector2 ballInitialForce;
 
-    void ResetBall()
+    private void ResetBall()
     {
-        // set to initial position
+        // Reset to initial position
         transform.position = ballInitialPosition;
-        // add a force
-        ballBody.velocity = Vector2.zero;
-        ballBody.angularVelocity = 0f;
-        ballBody.AddForce(ballInitialForce);
+
+        // Add force
+        ballBody.AddForce(ballInitialForce * ballSpeed);
+        // AddSlightlyRandomForce();
+    }
+
+    private void AddSlightlyRandomForce()
+    {
+        int rand = Random.Range(0, 100); // extra big for testing, but only gets applied first time?
+        Vector2 force = new Vector2( 100.0f - rand, -100.0f - rand );
+        ballBody.AddForce(force * ballSpeed);
     }
 
     void Awake()
     {
         ballBody = GetComponent<Rigidbody2D>();
         ballInitialPosition = new Vector3(-7f, 1f, 0f);
-        ballInitialForce    = new Vector2(100f * ballSpeed, -100f * ballSpeed);
-
+        ballInitialForce = new Vector2(100f, -100f);
         ResetBall();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.gameObject.name == "Floor")
+        string collider = collision.collider.gameObject.name;
+        
+        if (collider == "Floor")
         {
-            // (game over)
-            GameManager.instance.GameOver();
+            // could maybe use distance from paddle to weight ML reward/penalties ?
+            GameManager.Instance.GameOver();
 
             // give some num tries first?
-            // ResetBall();
         }
-    }
-
-    void LateUpdate()
-    {
+        
+        // attempting to add some randomness to direction, not working tho
+        // else if (collider == "Wall" || collider == "Brick")
+        // {
+        //     AddSlightlyRandomForce();
+        // }
     }
 }

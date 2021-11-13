@@ -6,7 +6,10 @@ public class BrickController : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject);
-        transform.parent.GetComponent<BricksController>().RemoveBrick(this);
+        if (collision.collider.TryGetComponent<BallController>(out BallController ball))
+        {
+            Destroy(gameObject);
+            transform.parent.GetComponent<BricksController>().RemoveBrick(this);
+        }
     }
 }

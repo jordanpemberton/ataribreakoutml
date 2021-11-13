@@ -6,40 +6,39 @@ public class PaddleController : MonoBehaviour
 {
     public float paddleSpeed = 10.0f;
 
-    private float horizontalInput;
-    private float paddle_x_bound;
-    private Vector3 paddle_scale;
+    private float _horizontalInput;
+    
+    private const float PaddleXBound = 10.25f;
 
-
-    void Awake()
+    private void Awake()
     {
-        // set paddle x-bounds to match left/right walls inner faces
-        paddle_x_bound = 10.25f; 
+        GameManager.Instance.humanPlayer = true;
+        GameManager.Instance.score = 0;
     }
 
+    private void Move(float horizontalInput)
+    {
+        transform.Translate(Vector3.right * (Time.deltaTime * paddleSpeed * horizontalInput));
+
+        // stay within bounds checks
+        if (transform.position.x < -PaddleXBound)
+        {
+            transform.position = new Vector3(-PaddleXBound, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x > PaddleXBound)
+        {
+            transform.position = new Vector3(PaddleXBound, transform.position.y, transform.position.z);
+        }
+    }
+    
     void LateUpdate()
     {
         // use input if human player
-        if (GameManager.instance.humanPlayer)
+        if (GameManager.Instance.humanPlayer)
         {
             // horizontal input
-            horizontalInput = Input.GetAxis("Horizontal");
-            transform.Translate(Vector3.right * Time.deltaTime * paddleSpeed * horizontalInput);
-        }
-        // if AI player
-        else
-        {
-            ;
-        }
-
-        // stay within bounds checks
-        if (transform.position.x < -paddle_x_bound)
-        {
-            transform.position = new Vector3(-paddle_x_bound, transform.position.y, transform.position.z);
-        }
-        else if (transform.position.x > paddle_x_bound)
-        {
-            transform.position = new Vector3(paddle_x_bound, transform.position.y, transform.position.z);
+            _horizontalInput = Input.GetAxis("Horizontal");
+            Move(_horizontalInput);
         }
     }
 }
