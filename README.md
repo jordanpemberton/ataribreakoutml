@@ -1,5 +1,11 @@
 ## Atari Breakout ML
 
+<br/>
+
+![Live WebGL MLBreakout game](Docs/Images/live-game-3.png)
+
+<br/>
+
 ### To set-up your Python environment:
 
 #### using pip
@@ -13,7 +19,6 @@
 <br/>
 
 ### To Train the NN:
-
 
 - Toggle the PaddleHuman game object's active status off.
 
