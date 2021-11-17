@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class BallController : MonoBehaviour
 {
-    public float ballSpeed = 15.0f;
+    public float ballSpeed = 3.0f;
 
     private Rigidbody2D _ballBody;
     private Vector3 _ballInitialPosition;
@@ -14,7 +14,7 @@ public class BallController : MonoBehaviour
     private void ResetBall()
     {
         // Reset to initial position
-        transform.position = _ballInitialPosition;
+        // transform.position = _ballInitialPosition;
         // Add force
         _ballBody.AddForce(_ballInitialForce * ballSpeed);
     }

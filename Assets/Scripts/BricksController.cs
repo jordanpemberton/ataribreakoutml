@@ -47,7 +47,7 @@ public class BricksController : MonoBehaviour
                 float x = X0 + i * BrickW;
                 float y = Y0 - j * BrickH;
 
-                brick.transform.position = new Vector2(x, y);
+                brick.transform.localPosition = new Vector2(x, y);
                 brick.transform.localScale = new Vector2(BrickW-0.1f, BrickH-0.1f);
 
                 SpriteRenderer rend = brick.GetComponent<SpriteRenderer>();

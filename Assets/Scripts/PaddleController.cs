@@ -21,17 +21,17 @@ public class PaddleController : MonoBehaviour
         transform.Translate(Vector3.right * (Time.deltaTime * paddleSpeed * horizontalInput));
 
         // stay within bounds checks
-        if (transform.position.x < -PaddleXBound)
+        if (transform.localPosition.x < -PaddleXBound)
         {
-            transform.position = new Vector3(-PaddleXBound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(-PaddleXBound, transform.position.y, transform.position.z);
         }
-        else if (transform.position.x > PaddleXBound)
+        else if (transform.localPosition.x > PaddleXBound)
         {
-            transform.position = new Vector3(PaddleXBound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(PaddleXBound, transform.position.y, transform.position.z);
         }
     }
     
-    private void LateUpdate()
+    private void Update()
     {
         // use input if human player
         if (GameManager.Instance.humanPlayer)

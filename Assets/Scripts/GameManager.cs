@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     // private singleton instance, access from anywhere
     public static GameManager Instance;
 
-    public bool humanPlayer = true;
+    public bool humanPlayer = false;
     public GameObject paddleAI;
     private PaddleAgent _agent;
     public GameObject scoreTextObject;
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         // If AI, reward 
         if (!humanPlayer && _agent != null)
         {
-            _agent.SetReward(_agent.brickHitReward);
+            _agent.AddReward(_agent.brickHitReward);
         }
     }
 
@@ -84,12 +84,15 @@ public class GameManager : MonoBehaviour
         if (humanPlayer)
         {
             Debug.Log("Game Over");
-            SceneManager.LoadScene("GameOver");
+            //SceneManager.LoadScene("GameOver");
         }
         // If AI, penalize and start new game
         else
         {
-            if (_agent != null) _agent.SetReward(_agent.gameOverPenalty);
+            if (_agent != null) {
+                _agent.AddReward(_agent.gameOverPenalty);
+                _agent.EndEpisode();
+            }
             StartGame();
         }
     }
@@ -105,7 +108,7 @@ public class GameManager : MonoBehaviour
         // If AI, reward and start new game 
         else
         {
-            if (_agent != null) _agent.SetReward(_agent.victoryReward);
+            if (_agent != null) _agent.AddReward(_agent.victoryReward);
             StartGame();
         }
     }

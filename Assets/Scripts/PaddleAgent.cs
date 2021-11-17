@@ -16,9 +16,9 @@ public class PaddleAgent : Agent
     
     // ML agent rewards:
     public float ballHitReward = 5.0f;  
-    public float brickHitReward = 5.0f;  
-    public float gameOverPenalty = -20.0f;
-    public float victoryReward = 20.0f; 
+    public float brickHitReward = 20.0f;
+    public float gameOverPenalty = -100.0f;
+    public float victoryReward = 200.0f;
     
     private const float PaddleXBound = 10.25f;
 
@@ -28,18 +28,24 @@ public class PaddleAgent : Agent
         GameManager.Instance.score = 0;
     }
 
+    /*override public void OnEpisodeBegin()
+    {
+    	SetReward(0);
+    	transform.localPosition = new Vector3(UnityEngine.Random.Range(-PaddleXBound/2f,PaddleXBound/2f), transform.localPosition.y, transform.localPosition.z);
+    }*/
+
     private void Move(float horizontalInput)
     {
         transform.Translate(Vector3.right * Time.deltaTime * paddleSpeed * horizontalInput);
 
         // stay within bounds checks
-        if (transform.position.x < -PaddleXBound)
+        if (transform.localPosition.x < -PaddleXBound)
         {
-            transform.position = new Vector3(-PaddleXBound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(-PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
-        else if (transform.position.x > PaddleXBound)
+        else if (transform.localPosition.x > PaddleXBound)
         {
-            transform.position = new Vector3(PaddleXBound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
     }
     
@@ -72,7 +78,7 @@ public class PaddleAgent : Agent
     {
         if (other.TryGetComponent<BallController>(out BallController ball))
         {
-            SetReward(ballHitReward);
+            AddReward(ballHitReward);
         }
     }
 }
