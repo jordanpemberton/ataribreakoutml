@@ -73,4 +73,23 @@ public class BricksController : MonoBehaviour
 
         CreateBricks();
     }
+
+    public void ResetBricks()
+    {
+        List<GameObject> toBeRemoved = new List<GameObject>();
+
+
+        foreach (GameObject brick in _activeBricks)
+        {
+            toBeRemoved.Add(brick);
+        }
+
+        foreach (GameObject brick in toBeRemoved) 
+        {
+            _activeBricks.Remove(brick);
+            Destroy(brick);
+        }
+
+        CreateBricks(); 
+    }
 }

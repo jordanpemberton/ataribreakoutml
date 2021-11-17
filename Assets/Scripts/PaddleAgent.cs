@@ -22,17 +22,20 @@ public class PaddleAgent : Agent
     
     private const float PaddleXBound = 10.25f;
 
+    private Vector3 _paddleInitialPosition;
+
     private void Awake()
     {
         GameManager.Instance.humanPlayer = false;
         GameManager.Instance.score = 0;
+        _paddleInitialPosition = transform.localPosition;
     }
 
-    /*override public void OnEpisodeBegin()
+    override public void OnEpisodeBegin()
     {
     	SetReward(0);
     	transform.localPosition = new Vector3(UnityEngine.Random.Range(-PaddleXBound/2f,PaddleXBound/2f), transform.localPosition.y, transform.localPosition.z);
-    }*/
+    }
 
     private void Move(float horizontalInput)
     {

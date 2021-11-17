@@ -10,10 +10,13 @@ public class PaddleController : MonoBehaviour
     
     private const float PaddleXBound = 10.25f;
 
+    private Vector3 _paddleInitialPosition;
+
     private void Awake()
     {
         GameManager.Instance.humanPlayer = true;
         GameManager.Instance.score = 0;
+        _paddleInitialPosition = transform.localPosition;
     }
 
     private void Move(float horizontalInput)
@@ -40,5 +43,10 @@ public class PaddleController : MonoBehaviour
             _horizontalInput = Input.GetAxis("Horizontal");
             Move(_horizontalInput);
         }
+    }
+
+    public void ResetPaddle()
+    {
+        transform.localPosition = _paddleInitialPosition;
     }
 }
