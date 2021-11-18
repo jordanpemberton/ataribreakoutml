@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         // If AI, reward 
         if (!humanPlayer && _agent != null)
         {
-            _agent.SetReward(_agent.brickHitReward);
+            _agent.AddReward(_agent.brickHitReward);
         }
     }
 
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
         // If AI, penalize and start new game
         else
         {
-            if (_agent != null) _agent.SetReward(_agent.gameOverPenalty);
+            if (_agent != null) _agent.AddReward(_agent.gameOverPenalty);
             StartGame();
         }
     }
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
         // If AI, reward and start new game 
         else
         {
-            if (_agent != null) _agent.SetReward(_agent.victoryReward);
+            if (_agent != null) _agent.AddReward(_agent.victoryReward);
             StartGame();
         }
     }

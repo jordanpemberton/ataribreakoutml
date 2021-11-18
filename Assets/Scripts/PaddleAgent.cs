@@ -72,7 +72,7 @@ public class PaddleAgent : Agent
     {
         if (other.TryGetComponent<BallController>(out BallController ball))
         {
-            SetReward(ballHitReward);
+            AddReward(ballHitReward);
         }
     }
 }
