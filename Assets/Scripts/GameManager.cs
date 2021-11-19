@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public bool humanPlayer;
-
+    
     public GameObject scoreTextObject;
     public GameObject levelATextObject;
     public GameObject ball;
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Breakout")
+        if (scene.name == "Breakout" || scene.name == "Training")
         {
             LinkGameObjects();
             score = 0;
