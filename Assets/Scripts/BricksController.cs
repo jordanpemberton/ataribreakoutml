@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 public class BricksController : MonoBehaviour
 {
     public GameObject brickObject;
 
-    private readonly List<GameObject> _activeBricks = new List<GameObject>();
+    private List<GameObject> _activeBricks = new List<GameObject>();
 
     private const float X0 = -12f;
     private const float Y0 = 7f;
@@ -29,10 +30,7 @@ public class BricksController : MonoBehaviour
         // +score
         GameManager.Instance.AddScore(1);
 
-        if (_activeBricks.Count == 0)
-        {
-            GameManager.Instance.GameWin();
-        }
+        if (_activeBricks.Count == 0) GameManager.Instance.GameWin();
     }
 
     private void CreateBricks()
@@ -58,19 +56,29 @@ public class BricksController : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void ResetBricks()
+    {
+        foreach (GameObject brick in _activeBricks)
+        {
+            Destroy(brick);
+        }
+        _activeBricks = new List<GameObject>();
+
+        CreateBricks();
+    }
+
+    private void Awake()
     {
         // link prefab if not already linked
         if (brickObject == null)
         {
-            brickObject   = Resources.Load("Prefabs/Brick", typeof(GameObject)) as GameObject;
-            if (brickObject == null)
-            {
-                if (GameManager.Instance.humanPlayer) Debug.Log("Prefab 'Brick' not found.");
-                return;
-            }
+            brickObject = Resources.Load("Prefabs/Brick", typeof(GameObject)) as GameObject;
+            if (brickObject == null)  Debug.Log("Prefab 'Brick' not found.");
         }
-
+    }
+    
+    private void Start()
+    {
         CreateBricks();
     }
 }

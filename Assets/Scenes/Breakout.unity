@@ -1082,6 +1082,7 @@ MonoBehaviour:
   MaxStep: 100
   ballTransform: {fileID: 371948601}
   paddleSpeed: 10
+  ballClosenessReward: 10
   ballHitReward: 1
   brickHitReward: 50
   gameOverPenalty: -100
@@ -1640,7 +1641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4cec7dba49ccaabdbe1001a9fb5344e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BrickObject: {fileID: 0}
+  brickObject: {fileID: 0}
 --- !u!4 &1640047258
 Transform:
   m_ObjectHideFlags: 0
