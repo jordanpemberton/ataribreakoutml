@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 public class GameManager : MonoBehaviour
 {
     // private singleton instance, access from anywhere
@@ -13,6 +12,7 @@ public class GameManager : MonoBehaviour
     public bool humanPlayer;
 
     public GameObject scoreTextObject;
+    public GameObject levelATextObject;
     public GameObject ball;
     public GameObject bricks;
     public GameObject paddleAI;
@@ -35,11 +35,13 @@ public class GameManager : MonoBehaviour
 
         if (scoreTextObject == null) scoreTextObject = GameObject.Find("ScoreText");
         if (scoreTextObject == null) Debug.Log("GameObject 'ScoreText' not found.");
+        
+        if (levelATextObject == null) levelATextObject = GameObject.Find("LevelAText");
+        if (levelATextObject == null) Debug.Log("GameObject 'LevelAText' not found.");
             
         if (paddleAI == null) paddleAI = GameObject.Find("PaddleAI");
         if (paddleAI == null)
         {
-            Debug.Log("GameObject 'PaddleAI' not found.");
             humanPlayer = true;
         }
         else
@@ -69,6 +71,7 @@ public class GameManager : MonoBehaviour
             LinkGameObjects();
             score = 0;
             if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
+            if (levelATextObject != null && _agent != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
         }
     }
     private void OnDisable()
@@ -76,11 +79,6 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     
-    // private void Start()
-    // {
-    //     if (SceneManager.GetActiveScene().name == "Breakout") LinkGameObjects();
-    // }
-
     public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
         Debug.Log("Start New Game");
@@ -93,10 +91,14 @@ public class GameManager : MonoBehaviour
         else
         {
             LinkGameObjects();
+            // Reset PaddleAI
+            if (_agent != null) _agent.ResetPaddle();
             // Reset bricks
             if (_ballController != null) _bricksController.ResetBricks();
             // Reset ball
             if (_ballController != null) _ballController.ResetBall();
+            
+            if (levelATextObject != null && _agent != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
         }
         
         // Reset score
@@ -108,7 +110,7 @@ public class GameManager : MonoBehaviour
     {
         // Update score
         score += points;
-        Debug.Log($"Score = {score}");
+        // Debug.Log($"Score = {score}");
         
         // Update score text
         if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
@@ -117,7 +119,7 @@ public class GameManager : MonoBehaviour
         if (!humanPlayer && _agent != null)
         {
             _agent.AddReward(_agent.brickHitReward);
-            Debug.Log($"total rewards = {_agent.GetCumulativeReward()}");
+            if (levelATextObject != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
         }
     }
 
@@ -136,7 +138,7 @@ public class GameManager : MonoBehaviour
             if (_agent != null)
             {
                 _agent.AddReward(_agent.gameOverPenalty);
-                Debug.Log($"total rewards = {_agent.GetCumulativeReward()}");
+                if (levelATextObject != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
                 _agent.EndEpisode();
             }
             StartGame();
@@ -158,7 +160,7 @@ public class GameManager : MonoBehaviour
             if (_agent != null)
             {
                 _agent.AddReward(_agent.victoryReward);
-                Debug.Log($"total rewards = {_agent.GetCumulativeReward()}");
+                if (levelATextObject != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
                 // end episode?
             }
             StartGame();

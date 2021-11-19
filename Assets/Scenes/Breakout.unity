@@ -1079,10 +1079,9 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 100
+  MaxStep: 500000
   ballTransform: {fileID: 371948601}
   paddleSpeed: 10
-  ballClosenessReward: 10
   ballHitReward: 1
   brickHitReward: 50
   gameOverPenalty: -100
