@@ -7,6 +7,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class PaddleAgent : Agent
 {
@@ -29,19 +30,27 @@ public class PaddleAgent : Agent
         GameManager.Instance.score = 0;
         _paddleInitialPosition = transform.localPosition;
     }
+    
+    public void ResetPaddle()
+    {
+        SetReward(0);
+        // transform.localPosition = _paddleInitialPosition;
+        transform.localPosition = new Vector3(UnityEngine.Random.Range(-PaddleXBound / 2.0f, PaddleXBound / 2.0f), 
+            transform.localPosition.y, transform.localPosition.z);
+    }
 
     private void Move(float horizontalInput)
     {
         transform.Translate(Vector3.right * Time.deltaTime * paddleSpeed * horizontalInput);
 
         // stay within bounds checks
-        if (transform.position.x < -PaddleXBound)
+        if (transform.localPosition.x < -PaddleXBound)
         {
-            transform.position = new Vector3(-PaddleXBound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(-PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
-        else if (transform.position.x > PaddleXBound)
+        else if (transform.localPosition.x > PaddleXBound)
         {
-            transform.position = new Vector3(PaddleXBound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
     }
     
@@ -52,12 +61,10 @@ public class PaddleAgent : Agent
         continuousActions[0] = Input.GetAxisRaw("Horizontal");
     }
 
-    // public override void OnEpisodeBegin()
-    // {
-    //     SetReward(0);
-    //     transform.localPosition = new Vector3(UnityEngine.Random.Range(-PaddleXBound / 2.0f, PaddleXBound / 2.0f), 
-    //         transform.localPosition.y, transform.localPosition.z);
-    // }
+    public override void OnEpisodeBegin()
+    {
+        ResetPaddle();
+    }
     
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -82,7 +89,9 @@ public class PaddleAgent : Agent
         if (other.TryGetComponent<BallController>(out BallController ball))
         {
             AddReward(ballHitReward);
-            Debug.Log($"total rewards = {GetCumulativeReward()}");
+            GameObject levelATextObject = GameObject.Find("LevelAText");
+            if (levelATextObject == null) Debug.Log("GameObject 'LevelAText' not found.");
+            if (levelATextObject != null) levelATextObject.GetComponent<Text>().text = GetCumulativeReward().ToString("F6");
         }
     }
 }
