@@ -15,17 +15,19 @@ public class PaddleAgent : Agent
     public float paddleSpeed = 15.0f;
     
     // ML agent rewards:
-    public float ballHitReward = 5.0f;  
-    public float brickHitReward = 5.0f;  
+    public float ballHitReward = 10.0f;  
+    public float brickHitReward = 15.0f;  
     public float gameOverPenalty = -20.0f;
     public float victoryReward = 20.0f; 
     
     private const float PaddleXBound = 10.25f;
+    private Vector3 _paddleInitialPosition;
 
     private void Awake()
     {
         GameManager.Instance.humanPlayer = false;
         GameManager.Instance.score = 0;
+        _paddleInitialPosition = transform.localPosition;
     }
 
     private void Move(float horizontalInput)
@@ -49,6 +51,13 @@ public class PaddleAgent : Agent
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         continuousActions[0] = Input.GetAxisRaw("Horizontal");
     }
+
+    // public override void OnEpisodeBegin()
+    // {
+    //     SetReward(0);
+    //     transform.localPosition = new Vector3(UnityEngine.Random.Range(-PaddleXBound / 2.0f, PaddleXBound / 2.0f), 
+    //         transform.localPosition.y, transform.localPosition.z);
+    // }
     
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -73,6 +82,7 @@ public class PaddleAgent : Agent
         if (other.TryGetComponent<BallController>(out BallController ball))
         {
             AddReward(ballHitReward);
+            Debug.Log($"total rewards = {GetCumulativeReward()}");
         }
     }
 }

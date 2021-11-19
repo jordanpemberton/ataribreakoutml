@@ -10,11 +10,44 @@ public class GameManager : MonoBehaviour
     // private singleton instance, access from anywhere
     public static GameManager Instance;
 
-    public bool humanPlayer = true;
-    public GameObject paddleAI;
-    private PaddleAgent _agent;
+    public bool humanPlayer;
+
     public GameObject scoreTextObject;
+    public GameObject ball;
+    public GameObject bricks;
+    public GameObject paddleAI;
+
+    private BallController _ballController;
+    private BricksController _bricksController;
+    private PaddleAgent _agent;
+    
     public int score = 0;
+
+    private void LinkGameObjects()
+    {
+        if (bricks == null) bricks = GameObject.Find("Bricks");
+        if (bricks == null) Debug.Log("GameObject 'Bricks' not found.");
+        if (bricks != null) _bricksController = bricks.GetComponent<BricksController>();
+
+        if (ball == null) ball = GameObject.Find("Ball");
+        if (ball == null) Debug.Log("GameObject 'Ball' not found.");
+        if (ball != null) _ballController = ball.GetComponent<BallController>();
+
+        if (scoreTextObject == null) scoreTextObject = GameObject.Find("ScoreText");
+        if (scoreTextObject == null) Debug.Log("GameObject 'ScoreText' not found.");
+            
+        if (paddleAI == null) paddleAI = GameObject.Find("PaddleAI");
+        if (paddleAI == null)
+        {
+            Debug.Log("GameObject 'PaddleAI' not found.");
+            humanPlayer = true;
+        }
+        else
+        {
+            humanPlayer = false;
+            _agent = paddleAI.GetComponent<PaddleAgent>();
+        }
+    }
 
     private void Awake()
     {
@@ -24,88 +57,110 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
     }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Breakout")
+        {
+            LinkGameObjects();
+            score = 0;
+            if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
+        }
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    // private void Start()
+    // {
+    //     if (SceneManager.GetActiveScene().name == "Breakout") LinkGameObjects();
+    // }
 
     public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
-        SceneManager.LoadScene("Breakout");
+        Debug.Log("Start New Game");
         
         if (humanPlayer)
         {
-            Debug.Log("Start New Game");
+            SceneManager.LoadScene("Breakout");
+            LinkGameObjects();
         }
         else
         {
-            if (paddleAI == null)
-            {
-                paddleAI = GameObject.Find("PaddleAI");
-                if (paddleAI != null) _agent = paddleAI.GetComponent<PaddleAgent>();
-            }
+            LinkGameObjects();
+            // Reset bricks
+            if (_ballController != null) _bricksController.ResetBricks();
+            // Reset ball
+            if (_ballController != null) _ballController.ResetBall();
         }
         
-        // link prefab if not already linked
-        if (scoreTextObject == null)
-        {
-            scoreTextObject = GameObject.Find("ScoreText");
-            if (scoreTextObject == null)
-            {
-                if (humanPlayer) Debug.Log("GameObject 'ScoreText' not found.");
-            }
-        }
+        // Reset score
         score = 0;
+        if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
     }
 
     public void AddScore(int points)
     {
         // Update score
         score += points;
-
+        Debug.Log($"Score = {score}");
+        
         // Update score text
-        if (scoreTextObject == null)
-        {
-            scoreTextObject = GameObject.Find("ScoreText");
-            if (scoreTextObject == null)
-            {
-                if (humanPlayer) Debug.Log("GameObject 'ScoreText' not found.");
-                return;
-            }
-        }
-        scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
-
+        if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
+        
         // If AI, reward 
         if (!humanPlayer && _agent != null)
         {
             _agent.AddReward(_agent.brickHitReward);
+            Debug.Log($"total rewards = {_agent.GetCumulativeReward()}");
         }
     }
 
     public void GameOver()
     {
+        Debug.Log("Game Over");
+
         // If human player, show GameOver screen
         if (humanPlayer)
         {
-            Debug.Log("Game Over");
             SceneManager.LoadScene("GameOver");
         }
         // If AI, penalize and start new game
         else
         {
-            if (_agent != null) _agent.AddReward(_agent.gameOverPenalty);
+            if (_agent != null)
+            {
+                _agent.AddReward(_agent.gameOverPenalty);
+                Debug.Log($"total rewards = {_agent.GetCumulativeReward()}");
+                _agent.EndEpisode();
+            }
             StartGame();
         }
     }
 
     public void GameWin() 
     {
+        Debug.Log("You Win!");
+
         // If human player show Victory screen
         if (humanPlayer)
         {
-            Debug.Log("You Win!");
             SceneManager.LoadScene("Victory");
         }
         // If AI, reward and start new game 
         else
         {
-            if (_agent != null) _agent.AddReward(_agent.victoryReward);
+            if (_agent != null)
+            {
+                _agent.AddReward(_agent.victoryReward);
+                Debug.Log($"total rewards = {_agent.GetCumulativeReward()}");
+                // end episode?
+            }
             StartGame();
         }
     }
