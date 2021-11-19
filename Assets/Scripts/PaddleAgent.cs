@@ -24,7 +24,7 @@ public class PaddleAgent : Agent
     private const float PaddleXBound = 10.25f;
     private Vector3 _paddleInitialPosition;
 
-    private void Awake()
+    private void Start()
     {
         GameManager.Instance.humanPlayer = false;
         GameManager.Instance.score = 0;
