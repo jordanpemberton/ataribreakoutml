@@ -27,8 +27,13 @@
 - Activate your Python virtual environment if using.
 
 - To begin training, call `mlagents-learn` from your terminal:
+- NVIDIA:
 
 `$ mlagents-learn ./Assets/config/PlayGame.yaml --run-id=Test1 [--force --time-scale 1]`
+
+- AMD:
+
+`$ mlagents-learn ./Assets/config/PlayGame.yaml --run-id=Test1 --force --time-scale 1`
 
 (The time-scale flag sets the training speed.  Use the force flag if re-using a run-id.)
 
