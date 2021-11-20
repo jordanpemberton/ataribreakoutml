@@ -27,15 +27,10 @@
 - Activate your Python virtual environment if using.
 
 - To begin training, call `mlagents-learn` from your terminal:
-- NVIDIA:
-
-`$ mlagents-learn ./Assets/config/PlayGame.yaml --run-id=Test1 [--force --time-scale 1]`
-
-- AMD:
 
 `$ mlagents-learn ./Assets/config/PlayGame.yaml --run-id=Test1 --force --time-scale 1`
 
-(The time-scale flag sets the training speed.  Use the force flag if re-using a run-id.)
+The time-scale flag sets the training speed.  Training speed might impact the game physics.  The force flag is required if re-using /over-writing a run-id.
 
 - In the Unity Editor, click play to start the game.  If starting from the StartUp screen, hit the 'start' button.
 
