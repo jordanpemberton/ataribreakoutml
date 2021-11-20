@@ -9,25 +9,30 @@ public class PaddleController : MonoBehaviour
     private float _horizontalInput;
     
     private const float PaddleXBound = 10.25f;
+    private Vector3 _paddleInitialPosition;
 
     private void Awake()
     {
-        GameManager.Instance.humanPlayer = true;
-        GameManager.Instance.score = 0;
+        _paddleInitialPosition = transform.localPosition;
     }
 
+    public void ResetPaddle()
+    {
+        transform.localPosition = _paddleInitialPosition;
+    }
+    
     private void Move(float horizontalInput)
     {
         transform.Translate(Vector3.right * (Time.deltaTime * paddleSpeed * horizontalInput));
 
         // stay within bounds checks
-        if (transform.position.x < -PaddleXBound)
+        if (transform.localPosition.x < -PaddleXBound)
         {
-            transform.position = new Vector3(-PaddleXBound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(-PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
-        else if (transform.position.x > PaddleXBound)
+        else if (transform.localPosition.x > PaddleXBound)
         {
-            transform.position = new Vector3(PaddleXBound, transform.position.y, transform.position.z);
+            transform.position = new Vector3(PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
     }
     

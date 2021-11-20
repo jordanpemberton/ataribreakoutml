@@ -7,6 +7,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class PaddleAgent : Agent
 {
@@ -15,17 +16,27 @@ public class PaddleAgent : Agent
     public float paddleSpeed = 15.0f;
     
     // ML agent rewards:
-    public float ballHitReward = 5.0f;  
-    public float brickHitReward = 5.0f;  
+    public float ballHitReward = 10.0f;  
+    public float brickHitReward = 15.0f;  
     public float gameOverPenalty = -20.0f;
     public float victoryReward = 20.0f; 
     
     private const float PaddleXBound = 10.25f;
+    private Vector3 _paddleInitialPosition;
 
-    private void Awake()
+    private void Start()
     {
         GameManager.Instance.humanPlayer = false;
         GameManager.Instance.score = 0;
+        _paddleInitialPosition = transform.localPosition;
+    }
+    
+    public void ResetPaddle()
+    {
+        SetReward(0);
+        // transform.localPosition = _paddleInitialPosition;
+        transform.localPosition = new Vector3(UnityEngine.Random.Range(-PaddleXBound / 2.0f, PaddleXBound / 2.0f), 
+            transform.localPosition.y, transform.localPosition.z);
     }
 
     private void Move(float horizontalInput)
@@ -33,13 +44,13 @@ public class PaddleAgent : Agent
         transform.Translate(Vector3.right * Time.deltaTime * paddleSpeed * horizontalInput);
 
         // stay within bounds checks
-        if (transform.position.x < -PaddleXBound)
+        if (transform.localPosition.x < -PaddleXBound)
         {
-            transform.position = new Vector3(-PaddleXBound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(-PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
-        else if (transform.position.x > PaddleXBound)
+        else if (transform.localPosition.x > PaddleXBound)
         {
-            transform.position = new Vector3(PaddleXBound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
     }
     
@@ -48,6 +59,11 @@ public class PaddleAgent : Agent
     {
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         continuousActions[0] = Input.GetAxisRaw("Horizontal");
+    }
+
+    public override void OnEpisodeBegin()
+    {
+        ResetPaddle();
     }
     
     public override void CollectObservations(VectorSensor sensor)
@@ -73,6 +89,9 @@ public class PaddleAgent : Agent
         if (other.TryGetComponent<BallController>(out BallController ball))
         {
             AddReward(ballHitReward);
+            GameObject levelATextObject = GameObject.Find("LevelAText");
+            if (levelATextObject == null) Debug.Log("GameObject 'LevelAText' not found.");
+            if (levelATextObject != null) levelATextObject.GetComponent<Text>().text = GetCumulativeReward().ToString("F6");
         }
     }
 }

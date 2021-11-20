@@ -5,24 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class BallController : MonoBehaviour
 {
+    
     public float ballSpeed = 15.0f;
 
     private Rigidbody2D _ballBody;
     private Vector3 _ballInitialPosition;
     private Vector2 _ballInitialForce;
 
-    private void ResetBall()
+    public void ResetBall()
     {
         // Reset to initial position
-        transform.position = _ballInitialPosition;
+        transform.localPosition = _ballInitialPosition;
         // Add force
+        _ballBody.velocity = Vector3.zero;
         _ballBody.AddForce(_ballInitialForce * ballSpeed);
     }
 
     private void Awake()
     {
         _ballBody = GetComponent<Rigidbody2D>();
-        _ballInitialPosition = new Vector3(-7f, 1f, 0f);
+        _ballInitialPosition = transform.localPosition;
         _ballInitialForce = new Vector2(100f, -100f);
         ResetBall();
     }
