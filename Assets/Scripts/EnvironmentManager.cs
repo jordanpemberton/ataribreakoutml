@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    public static EnvironmentManager Instance;
-    
     public bool humanPlayer = false;
 
     public GameObject scoreTextObject;
@@ -23,14 +21,25 @@ public class EnvironmentManager : MonoBehaviour
     
     public int score = 0;
     
-    private void Awake()
+    private void OnEnable()
     {
-        if (Instance == null)
-            Instance = this;
-        else if (Instance != this)
-            Destroy(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Training")
+        {
+            CheckForGameObjects();
+            score = 0;
+            if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
+            if (levelATextObject != null && _agent != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
+        }
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void CheckForGameObjects()
     {
         if (bricks == null) Debug.Log("GameObject 'Bricks' missing.");

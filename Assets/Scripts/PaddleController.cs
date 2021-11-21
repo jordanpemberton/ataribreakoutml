@@ -39,11 +39,14 @@ public class PaddleController : MonoBehaviour
     private void LateUpdate()
     {
         // use input if human player
-        if (GameManager.Instance.humanPlayer)
+        if (GameManager.Instance != null)
         {
-            // horizontal input
-            _horizontalInput = Input.GetAxis("Horizontal");
-            Move(_horizontalInput);
+            if (GameManager.Instance.humanPlayer)
+            {
+                // horizontal input
+                _horizontalInput = Input.GetAxis("Horizontal");
+                Move(_horizontalInput);
+            }
         }
     }
 }

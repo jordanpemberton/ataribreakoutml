@@ -11,6 +11,8 @@ using UnityEngine.UI;
 
 public class PaddleAgent : Agent
 {
+    public EnvironmentManager envManager; // for training
+
     [SerializeField] private Transform ballTransform; // link to ball
 
     public float paddleSpeed = 15.0f;
@@ -26,8 +28,16 @@ public class PaddleAgent : Agent
 
     private void Start()
     {
-        GameManager.Instance.humanPlayer = false;
-        GameManager.Instance.score = 0;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.humanPlayer = false;
+            GameManager.Instance.score = 0;
+        }
+        else if (envManager != null)
+        {
+            envManager.humanPlayer = false;
+            envManager.score = 0;
+        }
         _paddleInitialPosition = transform.localPosition;
     }
     
@@ -89,9 +99,20 @@ public class PaddleAgent : Agent
         if (other.TryGetComponent<BallController>(out BallController ball))
         {
             AddReward(ballHitReward);
-            GameObject levelATextObject = GameObject.Find("LevelAText");
-            if (levelATextObject == null) Debug.Log("GameObject 'LevelAText' not found.");
-            if (levelATextObject != null) levelATextObject.GetComponent<Text>().text = GetCumulativeReward().ToString("F6");
+            if (GameManager.Instance != null)
+            {
+                if (GameManager.Instance.levelATextObject != null)
+                {
+                    GameManager.Instance.levelATextObject.GetComponent<Text>().text = GetCumulativeReward().ToString("F6");
+                }
+            }
+            else if (envManager != null)
+            {
+                if (envManager.levelATextObject != null)
+                {
+                    envManager.levelATextObject.GetComponent<Text>().text = GetCumulativeReward().ToString("F6");
+                }
+            }
         }
     }
 }
