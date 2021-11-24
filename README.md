@@ -36,7 +36,7 @@
 
 - The training environments are managed by the EnvironmentManager, which is similar to the GameManager, but customized to allow training on multiple enviroments within one scene. 
 
-- A number of games is run in each training episode (the 'gameCount'. 
+- A number of games is run in each training episode, kept track of in the 'gameCount' variable. 
 
 - To begin training, call `mlagents-learn` from your terminal:
 
