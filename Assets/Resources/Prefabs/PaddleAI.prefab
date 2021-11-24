@@ -164,7 +164,7 @@ MonoBehaviour:
   paddleSpeed: 15
   ballHitReward: 10
   brickHitReward: 10
-  ballPaddleDistancePenalty: -5
+  ballPaddleDistancePenalty: -2
   gameOverPenalty: -10
   victoryReward: 10
 --- !u!114 &3998552130498359265

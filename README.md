@@ -28,7 +28,7 @@
 
 - The Training scene includes multiple training environments.  More environments can easily be added by adding 'Environment' prefabs to the scene.
 
-- The behavior parameters for all agents in a scene can be adjusted in the 'PaddleAI' prefab properties.  
+- The behavior parameters and reward values for all agents in the Training scene can be adjusted in the 'Environment' prefab properties.  Updating the 'PaddleAI' prefab's properties will not update the Environment objects.  Values in the 'PaddleAgent' script will be overridden by values in the the game object's properties.
 
 - Note that when using multiple training environments, the objects in each Environment must be correctly linked.  Resetting the scripts for either the Environment prefab or the PaddleAI prefab will unlink the necessecary local objects in the Environment prefab.
 

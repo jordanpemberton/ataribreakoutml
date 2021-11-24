@@ -18,9 +18,9 @@ public class PaddleAgent : Agent
     public float paddleSpeed = 15.0f;
     
     // ML agent rewards:
-    public float ballHitReward = 5.0f;  
+    public float ballHitReward = 10.0f;  
     public float brickHitReward = 10.0f;
-    public float ballPaddleDistancePenalty = -1.0f; // per unit from center of paddle, 0..13 
+    public float ballPaddleDistancePenalty = -2.0f; // per unit from center of paddle, 0..13 
     public float gameOverPenalty = -10.0f;
     public float victoryReward = 10.0f; 
     
@@ -92,12 +92,12 @@ public class PaddleAgent : Agent
     
     // GameOver, Victory, and Score rewards are all set in GameManager on corresponding events
     
-    // Ball distance penalty is set here when ball and paddle both on same y:
+    // Called when GameOver to set distance missed by penalty:
     public void MissDistanceReward()
     {
         if (ballTransform != null)
         {
-            float xDist = transform.position.x - ballTransform.position.x;
+            float xDist = Math.Abs(transform.localPosition.x - ballTransform.localPosition.x);
             float reward = (ballPaddleDistancePenalty * xDist);
             AddReward(reward);
             UpdateRewardText();
