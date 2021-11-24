@@ -9,8 +9,12 @@ public class EnvironmentManager : MonoBehaviour
 {
     public bool humanPlayer = false;
 
+    public int numGamesPerEpisodes = 10;
+    public int gameCount = 0;
+        
     public GameObject scoreTextObject;
     public GameObject levelATextObject;
+    public GameObject levelBTextObject;
     public GameObject ball;
     public GameObject bricks;
     public GameObject paddleAI;
@@ -33,6 +37,7 @@ public class EnvironmentManager : MonoBehaviour
             score = 0;
             if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
             if (levelATextObject != null && _agent != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
+            if (levelBTextObject != null && _agent != null) levelBTextObject.GetComponent<Text>().text = gameCount.ToString("D2");
         }
     }
     private void OnDisable()
@@ -49,8 +54,8 @@ public class EnvironmentManager : MonoBehaviour
         if (ball != null) _ballController = ball.GetComponent<BallController>();
 
         if (scoreTextObject == null) Debug.Log("GameObject 'ScoreText' missing.");
-        
         if (levelATextObject == null) Debug.Log("GameObject 'LevelAText' missing.");
+        if (levelBTextObject == null) Debug.Log("GameObject 'LevelBText' missing.");
             
         if (paddleAI == null) Debug.Log("GameObject 'PaddleAI' missing.");
         if (paddleAI != null) _agent = paddleAI.GetComponent<PaddleAgent>();
@@ -86,8 +91,21 @@ public class EnvironmentManager : MonoBehaviour
     public void GameOver()
     {
         _agent.AddReward(_agent.gameOverPenalty);
+        _agent.MissDistanceReward();
+        
         if (levelATextObject != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
-        _agent.EndEpisode();
+        
+        gameCount++;
+        if (levelBTextObject != null && _agent != null) levelBTextObject.GetComponent<Text>().text = gameCount.ToString("D2");
+
+        if (gameCount == numGamesPerEpisodes)
+        {
+            _agent.EndEpisode();
+            _agent.SetReward(0);
+            gameCount = 0;
+            if (levelBTextObject != null && _agent != null) levelBTextObject.GetComponent<Text>().text = gameCount.ToString("D2");
+        }
+        
         StartGame();
     }
 
@@ -95,7 +113,18 @@ public class EnvironmentManager : MonoBehaviour
     {
         _agent.AddReward(_agent.victoryReward);
         if (levelATextObject != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
-        // end episode?
+        
+        gameCount++;
+        if (levelBTextObject != null && _agent != null) levelBTextObject.GetComponent<Text>().text = gameCount.ToString("D2");
+
+        if (gameCount == numGamesPerEpisodes)
+        {
+            _agent.EndEpisode();
+            _agent.SetReward(0);
+            gameCount = 0;
+            if (levelBTextObject != null && _agent != null) levelBTextObject.GetComponent<Text>().text = gameCount.ToString("D2");
+        }
+        
         StartGame();
     }
 }

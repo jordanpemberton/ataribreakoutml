@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     
     public GameObject scoreTextObject;
     public GameObject levelATextObject;
+    public GameObject levelBTextObject;
     public GameObject ball;
     public GameObject bricks;
     public GameObject paddleAI;
@@ -38,7 +39,10 @@ public class GameManager : MonoBehaviour
         
         if (levelATextObject == null) levelATextObject = GameObject.Find("LevelAText");
         if (levelATextObject == null) Debug.Log("GameObject 'LevelAText' not found.");
-            
+        
+        if (levelBTextObject == null) levelBTextObject = GameObject.Find("LevelBText");
+        if (levelBTextObject == null) Debug.Log("GameObject 'LevelBText' not found.");
+
         if (paddleAI == null) paddleAI = GameObject.Find("PaddleAI");
         if (paddleAI == null)
         {
@@ -138,6 +142,7 @@ public class GameManager : MonoBehaviour
             if (_agent != null)
             {
                 _agent.AddReward(_agent.gameOverPenalty);
+                _agent.MissDistanceReward();
                 if (levelATextObject != null) levelATextObject.GetComponent<Text>().text = _agent.GetCumulativeReward().ToString("F6");
                 _agent.EndEpisode();
             }

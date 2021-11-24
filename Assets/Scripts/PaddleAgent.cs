@@ -18,10 +18,11 @@ public class PaddleAgent : Agent
     public float paddleSpeed = 15.0f;
     
     // ML agent rewards:
-    public float ballHitReward = 10.0f;  
-    public float brickHitReward = 15.0f;  
-    public float gameOverPenalty = -20.0f;
-    public float victoryReward = 20.0f; 
+    public float ballHitReward = 5.0f;  
+    public float brickHitReward = 10.0f;
+    public float ballPaddleDistancePenalty = -1.0f; // per unit from center of paddle, 0..13 
+    public float gameOverPenalty = -10.0f;
+    public float victoryReward = 10.0f; 
     
     private const float PaddleXBound = 10.25f;
     private Vector3 _paddleInitialPosition;
@@ -43,8 +44,6 @@ public class PaddleAgent : Agent
     
     public void ResetPaddle()
     {
-        SetReward(0);
-        // transform.localPosition = _paddleInitialPosition;
         transform.localPosition = new Vector3(UnityEngine.Random.Range(-PaddleXBound / 2.0f, PaddleXBound / 2.0f), 
             transform.localPosition.y, transform.localPosition.z);
     }
@@ -93,25 +92,42 @@ public class PaddleAgent : Agent
     
     // GameOver, Victory, and Score rewards are all set in GameManager on corresponding events
     
+    // Ball distance penalty is set here when ball and paddle both on same y:
+    public void MissDistanceReward()
+    {
+        if (ballTransform != null)
+        {
+            float xDist = transform.position.x - ballTransform.position.x;
+            float reward = (ballPaddleDistancePenalty * xDist);
+            AddReward(reward);
+            UpdateRewardText();
+        }
+    }
+    
     // Ball Hit reward is set here on collision event:
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<BallController>(out BallController ball))
         {
             AddReward(ballHitReward);
-            if (GameManager.Instance != null)
+            UpdateRewardText();
+        }
+    }
+
+    private void UpdateRewardText()
+    {
+        if (GameManager.Instance != null)
+        {
+            if (GameManager.Instance.levelATextObject != null)
             {
-                if (GameManager.Instance.levelATextObject != null)
-                {
-                    GameManager.Instance.levelATextObject.GetComponent<Text>().text = GetCumulativeReward().ToString("F6");
-                }
+                GameManager.Instance.levelATextObject.GetComponent<Text>().text = GetCumulativeReward().ToString("F6");
             }
-            else if (envManager != null)
+        }
+        else if (envManager != null)
+        {
+            if (envManager.levelATextObject != null)
             {
-                if (envManager.levelATextObject != null)
-                {
-                    envManager.levelATextObject.GetComponent<Text>().text = GetCumulativeReward().ToString("F6");
-                }
+                envManager.levelATextObject.GetComponent<Text>().text = GetCumulativeReward().ToString("F6");
             }
         }
     }
