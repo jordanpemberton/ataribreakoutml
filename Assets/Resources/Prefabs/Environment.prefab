@@ -434,11 +434,11 @@ MonoBehaviour:
   envManager: {fileID: 6422065213641604269}
   ballTransform: {fileID: 6422065213035654995}
   paddleSpeed: 15
-  ballHitReward: 10
-  brickHitReward: 10
-  ballPaddleDistancePenalty: -2
-  gameOverPenalty: -10
-  victoryReward: 10
+  ballHitReward: 100
+  brickHitReward: 200
+  ballPaddleDistancePenalty: -1
+  gameOverPenalty: -200
+  victoryReward: 400
 --- !u!114 &6422065212823758084
 MonoBehaviour:
   m_ObjectHideFlags: 0

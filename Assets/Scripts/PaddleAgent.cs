@@ -18,11 +18,11 @@ public class PaddleAgent : Agent
     public float paddleSpeed = 15.0f;
     
     // ML agent rewards:
-    public float ballHitReward = 10.0f;  
-    public float brickHitReward = 10.0f;
-    public float ballPaddleDistancePenalty = -2.0f; // per unit from center of paddle, 0..13 
-    public float gameOverPenalty = -10.0f;
-    public float victoryReward = 10.0f; 
+    public float ballHitReward = 100.0f;  
+    public float brickHitReward = 200.0f;
+    public float ballPaddleDistancePenalty = -1.0f; // * distance^2 on x-axis from center of paddle, where distance = 0..13 (0..169) 
+    public float gameOverPenalty = -200.0f;
+    public float victoryReward = 400.0f; 
     
     private const float PaddleXBound = 10.25f;
     private Vector3 _paddleInitialPosition;
@@ -44,8 +44,8 @@ public class PaddleAgent : Agent
     
     public void ResetPaddle()
     {
-        transform.localPosition = new Vector3(UnityEngine.Random.Range(-PaddleXBound / 2.0f, PaddleXBound / 2.0f), 
-            transform.localPosition.y, transform.localPosition.z);
+        float x = UnityEngine.Random.Range(-PaddleXBound, PaddleXBound);
+        transform.localPosition = new Vector3(x, transform.localPosition.y, transform.localPosition.z);
     }
 
     private void Move(float horizontalInput)
@@ -97,8 +97,8 @@ public class PaddleAgent : Agent
     {
         if (ballTransform != null)
         {
-            float xDist = Math.Abs(transform.localPosition.x - ballTransform.localPosition.x);
-            float reward = (ballPaddleDistancePenalty * xDist);
+            float weight = (transform.localPosition.x - ballTransform.localPosition.x) * (transform.localPosition.x - ballTransform.localPosition.x);
+            float reward = (ballPaddleDistancePenalty * weight);
             AddReward(reward);
             UpdateRewardText();
         }
