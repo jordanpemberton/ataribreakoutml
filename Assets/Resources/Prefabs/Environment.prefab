@@ -437,8 +437,8 @@ MonoBehaviour:
   ballHitReward: 100
   brickHitReward: 200
   ballPaddleDistancePenalty: -1
-  gameOverPenalty: -200
-  victoryReward: 400
+  gameOverPenalty: -500
+  victoryReward: 500
 --- !u!114 &6422065212823758084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -954,7 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   humanPlayer: 0
-  numGamesPerEpisodes: 10
+  numGamesPerEpisodes: 1
   gameCount: 0
   scoreTextObject: {fileID: 6422065212490556455}
   levelATextObject: {fileID: 6422065214146201163}

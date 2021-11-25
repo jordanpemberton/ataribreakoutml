@@ -9,7 +9,7 @@ public class EnvironmentManager : MonoBehaviour
 {
     public bool humanPlayer = false;
 
-    public int numGamesPerEpisodes = 10;
+    public int numGamesPerEpisodes = 1; // does this actually affect training?
     public int gameCount = 0;
         
     public GameObject scoreTextObject;

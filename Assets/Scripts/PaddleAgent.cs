@@ -21,8 +21,8 @@ public class PaddleAgent : Agent
     public float ballHitReward = 100.0f;  
     public float brickHitReward = 200.0f;
     public float ballPaddleDistancePenalty = -1.0f; // * distance^2 on x-axis from center of paddle, where distance = 0..13 (0..169) 
-    public float gameOverPenalty = -200.0f;
-    public float victoryReward = 400.0f; 
+    public float gameOverPenalty = -500.0f;
+    public float victoryReward = 500.0f; 
     
     private const float PaddleXBound = 10.25f;
     private Vector3 _paddleInitialPosition;
