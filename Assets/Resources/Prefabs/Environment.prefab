@@ -430,7 +430,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  MaxStep: 1000000
   envManager: {fileID: 6422065213641604269}
   ballTransform: {fileID: 6422065213035654995}
   paddleSpeed: 15

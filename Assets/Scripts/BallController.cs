@@ -47,21 +47,23 @@ public class BallController : MonoBehaviour
     // Prevent ball from bouncing in straight line forever:
     private void Update()
     {
-        float minX = 1.0f;
-        float minY = 1.0f;
+        float xMin = 1.0f;
+        float yMin = 1.0f;
+        float xAdjust = 10.0f;
+        float yAdjust = 10.0f;
         
-        if (Mathf.Abs(_ballBody.velocity.x) < minX)
+        if ((-xMin < _ballBody.velocity.x) && (_ballBody.velocity.x < xMin)) 
         {
-            _ballBody.velocity = new Vector3(
-                (_ballBody.velocity.x < 0.0f) ? -minX : minX,
+            _ballBody.velocity = new Vector2(
+                (_ballBody.velocity.x < 0.0f) ? -xAdjust : xAdjust,
                 _ballBody.velocity.y );
         }
         
-        if (Mathf.Abs(_ballBody.velocity.y) < minY)
+        if ((-yMin < _ballBody.velocity.y) && (_ballBody.velocity.y < yMin)) 
         {
-            _ballBody.velocity = new Vector3(
+            _ballBody.velocity = new Vector2(
                 _ballBody.velocity.x,
-                (_ballBody.velocity.y < 0.0f) ? -minY : minY );
+                (_ballBody.velocity.y < 0.0f) ? -yAdjust : yAdjust );
         }
     }
     
