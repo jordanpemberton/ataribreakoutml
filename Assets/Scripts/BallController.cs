@@ -43,6 +43,27 @@ public class BallController : MonoBehaviour
     // {
     //     SceneManager.sceneLoaded -= OnSceneLoaded;
     // }
+
+    // Prevent ball from bouncing in straight line forever:
+    private void Update()
+    {
+        float minX = 1.0f;
+        float minY = 1.0f;
+        
+        if (Mathf.Abs(_ballBody.velocity.x) < minX)
+        {
+            _ballBody.velocity = new Vector3(
+                (_ballBody.velocity.x < 0.0f) ? -minX : minX,
+                _ballBody.velocity.y );
+        }
+        
+        if (Mathf.Abs(_ballBody.velocity.y) < minY)
+        {
+            _ballBody.velocity = new Vector3(
+                _ballBody.velocity.x,
+                (_ballBody.velocity.y < 0.0f) ? -minY : minY );
+        }
+    }
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
