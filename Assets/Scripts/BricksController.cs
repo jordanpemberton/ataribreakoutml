@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 public class BricksController : MonoBehaviour
 {
     public EnvironmentManager envManager;  // for training
+    public IndvGameManager indvGameManager;
     public GameObject brickObject;
 
     private List<GameObject> _activeBricks = new List<GameObject>();
@@ -29,10 +30,10 @@ public class BricksController : MonoBehaviour
         _activeBricks.Remove(brick.gameObject);
 
         // +score
-        if (GameManager.Instance != null)
+        if (indvGameManager != null)
         {
-            GameManager.Instance.AddScore(1);
-            if (_activeBricks.Count == 0) GameManager.Instance.GameWin();
+            indvGameManager.AddScore(1);
+            if (_activeBricks.Count == 0) indvGameManager.GameWin();
         }
         else if (envManager != null)
         {

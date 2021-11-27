@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class BallController : MonoBehaviour
 {
     public EnvironmentManager envManager;
+    public IndvGameManager indvGameManager;
     
     public float ballSpeed = 15.0f;
 
@@ -74,17 +75,15 @@ public class BallController : MonoBehaviour
         if (colliderName == "Floor")
         {
             // could maybe use distance from paddle to weight ML reward/penalties ?
-            if (GameManager.Instance != null)
+            if (indvGameManager != null)
             {
-                GameManager.Instance.GameOver();
+                indvGameManager.GameOver();
             }
             else if (envManager != null)
             {
                 envManager.GameOver();
             }
             else Debug.Log(("no manager found"));
-
-            // give some num tries first?
         }
     }
 }

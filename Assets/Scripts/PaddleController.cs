@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PaddleController : MonoBehaviour
 {
-    public float paddleSpeed = 10.0f;
+    public IndvGameManager indvGameManager; 
+
+    public float paddleSpeed = 15.0f;
 
     private float _horizontalInput;
-    
     private const float PaddleXBound = 10.25f;
     private Vector3 _paddleInitialPosition;
 
@@ -38,15 +39,8 @@ public class PaddleController : MonoBehaviour
     
     private void LateUpdate()
     {
-        // use input if human player
-        if (GameManager.Instance != null)
-        {
-            if (GameManager.Instance.humanPlayer)
-            {
-                // horizontal input
-                _horizontalInput = Input.GetAxis("Horizontal");
-                Move(_horizontalInput);
-            }
-        }
+        // horizontal input
+        _horizontalInput = Input.GetAxis("Horizontal");
+        Move(_horizontalInput);
     }
 }
