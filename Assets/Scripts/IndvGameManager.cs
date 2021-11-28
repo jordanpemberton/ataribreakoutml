@@ -48,47 +48,67 @@ public class IndvGameManager : MonoBehaviour
         } 
     }
 
-    private void OnEnable()
+    private void ResetGameObjects()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name != "Breakout") return;
-        
-        CheckForGameObjects();
-        
-        score = 0;
-        if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
-        // set level or game count or whatever other text here
-    }
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+        // Reset game objects
+        if (_bricksController != null) _bricksController.ResetBricks();   
+        if (_ballController != null) _ballController.ResetBall();       
+        if (_paddleController != null) _paddleController.ResetPaddle(); 
+        if (_paddleAgent != null) _paddleAgent.ResetPaddle();
+    } 
     
     public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
         // Check for objects, link controllers
         CheckForGameObjects();
         
-        // Reset game objects
-        if (_bricksController != null) _bricksController.ResetBricks();   
-        if (_ballController != null) _ballController.ResetBall();       
-        if (_paddleController != null) _paddleController.ResetPaddle(); 
-        if (_paddleAgent != null) _paddleAgent.ResetPaddle();
+        // Reset game objects        
+        ResetGameObjects();
         
         // Reset score
-        score = 0;                                                      
+        score = 0;
+        GameManager.Instance.humanScore = 0;
+        GameManager.Instance.aiScore = 0;
         if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
-        // reset any other text here
+        // set level or game count or whatever other text here
     }
-
+ 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "Breakout") return;
+        // StartGame();
+        
+        // Check for objects, link controllers
+        CheckForGameObjects();
+        
+        // Reset game objects?
+        // ResetGameObjects();   // <-- This makes ball really fast and messes up NN
+        
+        // Reset score
+        score = 0;
+        GameManager.Instance.humanScore = 0;
+        GameManager.Instance.aiScore = 0;
+        if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
+        // set level or game count or whatever other text here
+    }
+    
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
     public void AddScore(int points)
     {
         // Update score
         score += points;
         if (scoreTextObject != null) scoreTextObject.GetComponent<Text>().text = score.ToString("D3");
+        if (humanPlayer) GameManager.Instance.humanScore = score;
+        else GameManager.Instance.aiScore = score;
     }
 
     public void GameOver()
@@ -100,23 +120,15 @@ public class IndvGameManager : MonoBehaviour
         if (gameCount == numTriesPerGame)
         {
             gameCount = 0;
-            GameManager.Instance.GameOver(humanPlayer ? 2 : 1);
+            GameManager.Instance.GameOver();
         }
     }
 
     public void GameWin() 
     {
-        GameManager.Instance.GameWin(humanPlayer ? 1 : 2);
+        GameManager.Instance.GameWin();
     }
-
-    // public void ExitGame()           // Link to Game.ExitGameButton.OnClick
-    // {
-    //     SceneManager.LoadScene("Startup");
-    // }
-
-//     public void QuitGame()           // Link to GameOver.QuitGameButton.OnClick
-//     {
-//         // exit unity game ?
-//         SceneManager.LoadScene("Startup"); // go back to startup for now
-//     }
+    
+    // dispose of tensor data? 
+    // https://github.com/AlexRibard/Barracuda-U-2-NetTest/pull/4
 }

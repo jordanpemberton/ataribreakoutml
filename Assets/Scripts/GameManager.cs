@@ -12,10 +12,12 @@ public class GameManager : MonoBehaviour
     public GameObject humanGameManager;
     public GameObject aiGameManager;
     
+    public int humanScore = 0;
+    public int aiScore = 0;
     public int numTriesPerGame = 1;
     public int gameCount = 0;
-    
-    private int _winner; // 0 = none, 1 = human, 2 = AI
+
+    // private int _winner; // 0 = none, 1 = human, 2 = AI
     private bool _paused;
     
     public void Awake()
@@ -41,28 +43,18 @@ public class GameManager : MonoBehaviour
         if (aiGameManager) aiGameManager.GetComponent<IndvGameManager>().StartGame();
     }
     
-    public void GameOver(int winner)
+    public void GameOver()
     {
-        Debug.Log($"Game Over -- {(winner == 1 ? "AI" : winner == 2 ? "Human" : "?")} Lost");
-
-        // give some num tries first...
+        // give some num tries first...?
         gameCount++;
-        if (gameCount == numTriesPerGame)
-        {
-            gameCount = 0;
-            _winner = winner;
-            SceneManager.LoadScene("GameOver");
-            // Show who won, scores on GameOver screen text <--
-        }
+        if (gameCount != numTriesPerGame) return;
+        gameCount = 0;
+        SceneManager.LoadScene("GameOver");
     }
 
-    public void GameWin(int winner) 
+    public void GameWin() 
     {
-        Debug.Log($"Victory -- {(winner == 1 ? "Human" : winner == 2 ? "AI" : "?")} Won");
-       
-        _winner = winner;
         SceneManager.LoadScene("Victory");
-        // Show who won, scores on Victory screen text <--
     }
     
     public void PauseGame()           // Link to Game.PauseGameButton.OnClick
