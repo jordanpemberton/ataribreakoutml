@@ -106,17 +106,17 @@ public class IndvGameManager : MonoBehaviour
 
     public void GameWin() 
     {
-        GameManager.Instance.GameOver(humanPlayer ? 1 : 2);
+        GameManager.Instance.GameWin(humanPlayer ? 1 : 2);
     }
 
-    public void ExitGame()           // Link to Game.ExitGameButton.OnClick
-    {
-        SceneManager.LoadScene("Startup");
-    }
+    // public void ExitGame()           // Link to Game.ExitGameButton.OnClick
+    // {
+    //     SceneManager.LoadScene("Startup");
+    // }
 
-    public void QuitGame()           // Link to GameOver.QuitGameButton.OnClick
-    {
-        // exit unity game ?
-        SceneManager.LoadScene("Startup"); // go back to startup for now
-    }
+//     public void QuitGame()           // Link to GameOver.QuitGameButton.OnClick
+//     {
+//         // exit unity game ?
+//         SceneManager.LoadScene("Startup"); // go back to startup for now
+//     }
 }
