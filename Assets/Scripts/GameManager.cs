@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
-    public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
+    public void NewGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
         Debug.Log("Start New Game");
         
