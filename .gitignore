@@ -122,4 +122,6 @@ eggs/
 *~
 
 # Custom ignores
+Docs/Videos/
+
 

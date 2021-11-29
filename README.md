@@ -18,6 +18,12 @@
 
 <br/>
 
+### Training 
+
+![Training Video, MLBreakout game](Docs/Images/training-video.gif)
+
+<br/>
+
 ### Training environments:
 
 - The Training scene includes multiple training environments.  More environments can easily be added by adding 'Environment' prefabs to the scene.

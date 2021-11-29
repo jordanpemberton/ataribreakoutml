@@ -8,7 +8,7 @@ public class BallController : MonoBehaviour
     public EnvironmentManager envManager;
     public IndvGameManager indvGameManager;
     
-    public float ballSpeed = 15.0f;
+    public float ballSpeed;
 
     private Rigidbody2D _ballBody;
     private Vector3 _ballInitialPosition;
@@ -71,19 +71,11 @@ public class BallController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         string colliderName = collision.collider.gameObject.name;
+
+        if (colliderName != "Floor") return;
         
-        if (colliderName == "Floor")
-        {
-            // could maybe use distance from paddle to weight ML reward/penalties ?
-            if (indvGameManager != null)
-            {
-                indvGameManager.GameOver();
-            }
-            else if (envManager != null)
-            {
-                envManager.GameOver();
-            }
-            else Debug.Log(("no manager found"));
-        }
+        if (indvGameManager != null) indvGameManager.GameOver();
+        else if (envManager != null) envManager.GameOver();
+        else Debug.Log(("no manager found"));
     }
 }
