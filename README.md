@@ -2,7 +2,7 @@
 
 <br/>
 
-![Human-vs-AI WebGL MLBreakout game](Docs/Images/human-vs-ai-game.png)
+![Human-vs-AI WebGL MLBreakout game](Docs/Images/gameplay.gif)
 
 <br/>
 
