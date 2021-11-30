@@ -1,95 +1,70 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 public class GameManager : MonoBehaviour
 {
-    // private singleton instance, access from anywhere
-    public static GameManager instance = null;
+    public static GameManager Instance = null;
+    
+    public GameObject humanGameManager;
+    public GameObject aiGameManager;
+    
+    public int humanScore = 0;
+    public int aiScore = 0;
+    public int numTriesPerGame = 1;
+    public int gameCount = 0;
 
-    public bool  humanPlayer = true;
-
-    public GameObject ScoreTextObject;
-    public int score = 0;
-
-    void Awake()
+    // private int _winner; // 0 = none, 1 = human, 2 = AI
+    private bool _paused;
+    
+    public void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
+        if (Instance == null) Instance = this;
+        else if (Instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
     }
-
-    // void Start()
-    // {
-    //     // link prefab if not already linked
-    //     if (ScoreTextObject == null)
-    //     {
-    //         ScoreTextObject = GameObject.Find("ScoreText");
-    //         if (ScoreTextObject == null)
-    //         {
-    //             Debug.Log("GameObject 'ScoreText' not found.");
-    //             return;
-    //         }
-    //     }
-
-    //     score = 0;
-    // }
-
-    public void StartGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
+    
+    public void NewGame()   // Link to Startup.StartGameButton.OnClick, GameOver.NewGameButton.OnClick
     {
         Debug.Log("Start New Game");
-
+        
+        gameCount = 0;
+        
         SceneManager.LoadScene("Breakout");
-
-        // link prefab if not already linked
-        if (ScoreTextObject == null)
-        {
-            ScoreTextObject = GameObject.Find("ScoreText");
-            if (ScoreTextObject == null)
-            {
-                Debug.Log("GameObject 'ScoreText' not found.");
-                return;
-            }
-        }
-
-        score = 0;
+        
+        // trigger game manager's start game functions here...?
+        if (humanGameManager == null) humanGameManager = GameObject.Find("HumanGameManager");
+        if (humanGameManager) humanGameManager.GetComponent<IndvGameManager>().StartGame();
+        
+        if (aiGameManager == null) aiGameManager = GameObject.Find("AIGameManager");
+        if (aiGameManager) aiGameManager.GetComponent<IndvGameManager>().StartGame();
     }
-
-    public void AddScore(int points)
-    {
-        if (ScoreTextObject == null)
-        {
-            ScoreTextObject = GameObject.Find("ScoreText");
-            if (ScoreTextObject == null)
-            {
-                Debug.Log("GameObject 'ScoreText' not found.");
-                return;
-            }
-            score = 0;
-        }
-
-        Debug.Log($"+{points} point(s)");
-        score += points;
-        ScoreTextObject.GetComponent<Text>().text = score.ToString("D3");
-    }
-
+    
     public void GameOver()
     {
-        Debug.Log("Game Over");
+        // give some num tries first...?
+        gameCount++;
+        if (gameCount != numTriesPerGame) return;
+        gameCount = 0;
         SceneManager.LoadScene("GameOver");
     }
 
-    public void GameWin()
+    public void GameWin() 
     {
-        Debug.Log("You Win!");
         SceneManager.LoadScene("Victory");
     }
-
+    
+    public void PauseGame()           // Link to Game.PauseGameButton.OnClick
+    {
+        Debug.Log("Pause Game");
+        _paused = !_paused;
+        if (_paused) Time.timeScale = 0;
+        else Time.timeScale = 1;
+    }
+    
     public void ExitGame()           // Link to Game.ExitGameButton.OnClick
     {
         Debug.Log("Exit Game");
@@ -98,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()           // Link to GameOver.QuitGameButton.OnClick
     {
-        Debug.Log("Exit Game");
+        Debug.Log("Quit Game");
         // exit unity game ?
         SceneManager.LoadScene("Startup"); // go back to startup for now
     }

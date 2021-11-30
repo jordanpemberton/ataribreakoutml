@@ -1,18 +1,21 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 public class BricksController : MonoBehaviour
 {
-    public GameObject BrickObject;
+    public EnvironmentManager envManager;  // for training
+    public IndvGameManager indvGameManager;
+    public GameObject brickObject;
 
-    private List<GameObject> activeBricks = new List<GameObject>();  
+    private List<GameObject> _activeBricks = new List<GameObject>();
 
-    private float x0 = -12f;
-    private float y0 =  7f;
-    private float brick_h = 0.5f;
-    private float brick_w = 2f;
+    private const float X0 = -12f;
+    private const float Y0 = 7f;
+    private const float BrickH = 0.5f;
+    private const float BrickW = 2f;
 
-    private Color[] brickColors = new Color[] {
+    private readonly Color[] _brickColors = new Color[] {
         Color.grey,
         Color.white,
         Color.magenta,
@@ -24,60 +27,67 @@ public class BricksController : MonoBehaviour
 
     public void RemoveBrick(BrickController brick)
     {
-        activeBricks.Remove(brick.gameObject);
+        _activeBricks.Remove(brick.gameObject);
 
         // +score
-        GameManager.instance.AddScore(1);
-
-        if (activeBricks.Count == 0)
+        if (indvGameManager != null)
         {
-            GameManager.instance.GameWin();
+            indvGameManager.AddScore(1);
+            if (_activeBricks.Count == 0) indvGameManager.GameWin();
+        }
+        else if (envManager != null)
+        {
+            envManager.AddScore(1);
+            if (_activeBricks.Count == 0) envManager.GameWin();
         }
     }
 
-    void CreateBricks()
+    private void CreateBricks()
     {
         // instantiate child brick game objects
         for (int i=0; i<13; i++)
         {
             for (int j=0; j<7; j++)
             {
-                GameObject brick = Instantiate(BrickObject);
+                GameObject brick = Instantiate(brickObject, transform, true);
 
-                float x = x0 + i * brick_w;
-                float y = y0 - j * brick_h;
+                float x = X0 + i * BrickW;
+                float y = Y0 - j * BrickH;
 
-                brick.transform.position = new Vector2(x, y);
-                brick.transform.localScale = new Vector2(brick_w-0.1f, brick_h-0.1f);
+                brick.transform.localPosition = new Vector2(x, y);
+                brick.transform.localScale = new Vector2(BrickW-0.1f, BrickH-0.1f);
 
                 SpriteRenderer rend = brick.GetComponent<SpriteRenderer>();
-                rend.material.color = brickColors[j];
+                rend.material.color = _brickColors[j];
 
-                brick.transform.parent  = transform;  // set Bricks as parent to this brick
-
-                activeBricks.Add(brick);
+                _activeBricks.Add(brick);
             }
         }
     }
 
-    void Start()
+    public void ResetBricks()
     {
-        // link prefab if not already linked
-        if (BrickObject == null)
+        foreach (GameObject brick in _activeBricks)
         {
-            BrickObject   = Resources.Load("Prefabs/Brick", typeof(GameObject)) as GameObject;
-            if (BrickObject == null)
-            {
-                Debug.Log("Prefab 'Brick' not found.");
-                return;
-            }
+            Destroy(brick);
         }
+        _activeBricks = new List<GameObject>();
 
         CreateBricks();
     }
 
-    void Update()
+    private void Awake()
     {
-
+        // link prefab if not already linked
+        if (brickObject == null)
+        {
+            brickObject = Resources.Load("Prefabs/Brick", typeof(GameObject)) as GameObject;
+            if (brickObject == null)  Debug.Log("Prefab 'Brick' not found.");
+        }
+    }
+    
+    private void Start()
+    {
+        CreateBricks();
     }
 }

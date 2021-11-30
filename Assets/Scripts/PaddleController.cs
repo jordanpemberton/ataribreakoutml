@@ -4,42 +4,43 @@ using UnityEngine;
 
 public class PaddleController : MonoBehaviour
 {
-    public float paddleSpeed = 10.0f;
+    public IndvGameManager indvGameManager; 
 
-    private float horizontalInput;
-    private float paddle_x_bound;
-    private Vector3 paddle_scale;
+    public float paddleSpeed = 15.0f;
 
+    private float _horizontalInput;
+    private const float PaddleXBound = 10.25f;
+    private Vector3 _paddleInitialPosition;
 
-    void Awake()
+    private void Awake()
     {
-        // set paddle x-bounds to match left/right walls inner faces
-        paddle_x_bound = 10.25f; 
+        _paddleInitialPosition = transform.localPosition;
     }
 
-    void LateUpdate()
+    public void ResetPaddle()
     {
-        // use input if human player
-        if (GameManager.instance.humanPlayer)
-        {
-            // horizontal input
-            horizontalInput = Input.GetAxis("Horizontal");
-            transform.Translate(Vector3.right * Time.deltaTime * paddleSpeed * horizontalInput);
-        }
-        // if AI player
-        else
-        {
-            ;
-        }
+        transform.localPosition = _paddleInitialPosition;
+    }
+    
+    private void Move(float horizontalInput)
+    {
+        transform.Translate(Vector3.right * (Time.deltaTime * paddleSpeed * horizontalInput));
 
         // stay within bounds checks
-        if (transform.position.x < -paddle_x_bound)
+        if (transform.localPosition.x < -PaddleXBound)
         {
-            transform.position = new Vector3(-paddle_x_bound, transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(-PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
-        else if (transform.position.x > paddle_x_bound)
+        else if (transform.localPosition.x > PaddleXBound)
         {
-            transform.position = new Vector3(paddle_x_bound, transform.position.y, transform.position.z);
+            transform.position = new Vector3(PaddleXBound, transform.localPosition.y, transform.localPosition.z);
         }
+    }
+    
+    private void LateUpdate()
+    {
+        // horizontal input
+        _horizontalInput = Input.GetAxis("Horizontal");
+        Move(_horizontalInput);
     }
 }

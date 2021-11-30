@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7702221581858734992
+--- !u!1 &7266229428940739448
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8534960283098720011}
-  - component: {fileID: 1419096962902114813}
+  - component: {fileID: 7266229428940739449}
+  - component: {fileID: 7266229428940739450}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: EnvManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8534960283098720011
+--- !u!4 &7266229428940739449
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7702221581858734992}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 7266229428940739448}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1419096962902114813
+--- !u!114 &7266229428940739450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7702221581858734992}
+  m_GameObject: {fileID: 7266229428940739448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a34e8737dd8464c87f0aedab8b8411d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e206931bd38b017d971e739b512fb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  humanGameManager: {fileID: 0}
-  aiGameManager: {fileID: 0}
-  numTriesPerGame: 1
-  gameCount: 0
+  humanPlayer: 0
+  scoreTextObject: {fileID: 0}
+  levelATextObject: {fileID: 0}
+  ball: {fileID: 0}
+  bricks: {fileID: 0}
+  paddleAI: {fileID: 0}
+  score: 0
